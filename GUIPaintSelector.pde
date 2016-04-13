@@ -3,6 +3,10 @@ public class GUIPaintSelector extends AbstractPaintSelector{
   private HScrollbar hsG;
   private HScrollbar hsB;
 
+  private VScrollbar vsR;
+  private VScrollbar vsG;
+  private VScrollbar vsB;
+
   private int r,g,b;
 
   final int xposR = 340, ypos = height-10, h = 200, w = 16, l = 16;
@@ -14,11 +18,22 @@ public class GUIPaintSelector extends AbstractPaintSelector{
     hsR = new HScrollbar(xposR, ypos, h, w, l);
     hsG = new HScrollbar(xposG, ypos, h, w, l);
     hsB = new HScrollbar(xposB, ypos, h, w, l);
+    vsR = new VScrollbar(width-200, height-(height-40), w, h, l);
+    vsG = new VScrollbar(width-150, height-(height-40), w, h, l);
+    vsB = new VScrollbar(width-100, height-(height-40), w, h, l);
   }
 
   void draw(){
     this.update();
     this.drawSliders();
+    vsR.update();
+    vsR.display();
+
+    vsG.update();
+    vsG.display();
+
+    vsB.update();
+    vsB.display();
   }
 
   void update(){

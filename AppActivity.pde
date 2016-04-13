@@ -1,15 +1,8 @@
 public interface AppActivity{
 
   //Window
-  final int w = 1280; //width
-  final int h = 800; //height
-
-  //Automatic window and column re-sizing
-  float b=0.8*w/3; //default is at 0.8;
-  float c=0.2*w/3;
-  float a=c/2;
-  float d=h-3*a-b;
-  float e=w-c;
+  final int w = 1250; //width
+  final int h = 750; //height
 
   public void setState(int state);
   public int getState();

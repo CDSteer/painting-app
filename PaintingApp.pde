@@ -37,7 +37,7 @@ final int H = 600; //height
 
 void setup() {
   currentActivity = new MenuActivity();
-  size(1280, 800);
+  size(1250, 750);
   background(200);
 
   println(Serial.list());
