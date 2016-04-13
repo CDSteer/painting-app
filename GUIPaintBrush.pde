@@ -8,11 +8,8 @@ public class GUIPaintBrush extends AbstractPaintBrush {
 
   public void drawSlider() {
     hs1.update();
-    int size = (int)map((int)hs1.getPos(), 0, 200, 0, 40);
+    int size = (int)map((int)hs1.getPos(), 0, 240, 0, 40);
     this.setSize(size);
     hs1.display();
   }
-
 }
-
-// this will draw a slider and get the size from the slider
