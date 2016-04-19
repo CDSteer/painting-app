@@ -29,12 +29,14 @@ public abstract class CanvasActivity extends PaintingAppActivity{
      strokeWeight(size);
      line(pmouseX, pmouseY, mouseX, mouseY);
      amoutOfPaint--;
+     strokeWeight(1);
+     stroke(0);
     }
   }
 
 
   boolean inCanvas(){
-    if((mouseX > xMin) && (mouseX <  w - 2*xMin)){
+    if((mouseX > xMin) && (mouseX <  w - 2*xMin-200)){
       if((mouseY > yMin) && (mouseY < h-2*yMin)){
         return true;
       }

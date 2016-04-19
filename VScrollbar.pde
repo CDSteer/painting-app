@@ -56,15 +56,17 @@ public class VScrollbar {
     }
   }
 
-  void display() {
-    fill(255);
+  void display(color c) {
+    fill(c);
     rect(xpos, ypos, swidth, sheight);
     if(over || locked) {
-      fill(255, 255, 0);
+      fill(0, 0, 0);
     } else {
-      fill(255, 0, 0);
+      fill(0, 0, 0);
     }
+    stroke(255);
     rect(xpos, spos, swidth, swidth);
+    stroke(0);
   }
 
   float getPos() {

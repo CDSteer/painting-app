@@ -3,8 +3,8 @@ public abstract class AbstractPaintBrush implements PaintBrush{
   private color c;
 
   public AbstractPaintBrush(){
-    this.size = 20;
-    this.c = color(255,0,0);
+    this.size = 10;
+    this.c = color(0,0,0);
   }
 
   public int getSize(){

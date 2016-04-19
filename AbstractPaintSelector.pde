@@ -5,7 +5,7 @@ public abstract class AbstractPaintSelector{
     this.pot =  new PaintPot();
   }
 
-  abstract void draw();
+  abstract void drawPaintSelector();
   abstract void update();
 
   public void setColor(int r, int g, int b){
