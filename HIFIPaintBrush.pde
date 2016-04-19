@@ -1,10 +1,10 @@
-public class GUIPaintBrush extends AbstractPaintBrush {
+public class HIFIPaintBrush extends AbstractPaintBrush {
   private VScrollbar vs1;
   private final int SLIDERLOW = 568;
   private final int SLIDERHIGH = 370;
   private final int xpos = width-200, ypos = height-(height-340), h = 200, w = 16, l = 16;
 
-  public GUIPaintBrush(){
+  public HIFIPaintBrush(){
     super();
     vs1 = new VScrollbar(xpos, ypos, w, h, l);
   }
@@ -30,5 +30,7 @@ public class GUIPaintBrush extends AbstractPaintBrush {
     point(width-100, ypos+100);
     strokeWeight(1);
     stroke(0);
+
+
   }
 }

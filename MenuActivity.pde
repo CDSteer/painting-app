@@ -18,11 +18,13 @@ public class MenuActivity extends PaintingAppActivity{
     this.buttons[1].draw();
     this.buttons[2].draw();
     this.buttons[3].draw();
+    this.update();
+    this.mousePressed();
   }
 
-  void update(int x, int y){
+  void update(){
     for (int i = 0; i < BUTTONCOUNT; i++){
-      if (this.buttons[i].inBounds(x,y)){
+      if (this.buttons[i].inBounds(mouseX, mouseY)){
         this.hoverbutton = (i+1);
         this.buttons[i].hightlight();
       }else{
