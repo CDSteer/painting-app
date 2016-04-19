@@ -6,7 +6,6 @@ public class GUIPaintBrush extends AbstractPaintBrush {
 
   public GUIPaintBrush(){
     super();
-
     vs1 = new VScrollbar(xpos, ypos, w, h, l);
   }
 
@@ -31,5 +30,7 @@ public class GUIPaintBrush extends AbstractPaintBrush {
     point(width-100, ypos+100);
     strokeWeight(1);
     stroke(0);
+
+    
   }
 }

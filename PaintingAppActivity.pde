@@ -13,13 +13,9 @@ public abstract class PaintingAppActivity implements AppActivity{
     smooth();
   }
 
-  public void update(int x, int y){
+  public void update(int x, int y){}
 
-  }
-
-  public void mousePressed(){
-
-  }
+  public void mousePressed(){}
 
   public void setState(int state){
     this.state = state;

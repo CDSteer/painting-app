@@ -20,7 +20,7 @@ public class Button extends AbstractGUIElement{
     fill(0);
     text(this.text, this.getX() + (this.getWidth()/4), this.getY() + (getHeight()/2));
   }
-  
+
   void hightlight(){
     this.cc = highlight;
   }

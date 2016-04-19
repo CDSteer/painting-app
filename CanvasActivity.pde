@@ -6,6 +6,7 @@ public abstract class CanvasActivity extends PaintingAppActivity{
   int amoutOfPaint;
 
   public CanvasActivity(){
+    background(200);
     this.amoutOfPaint = 9999999;
     this.setup();
   }
@@ -34,10 +35,9 @@ public abstract class CanvasActivity extends PaintingAppActivity{
     }
   }
 
-
   boolean inCanvas(){
     if((mouseX > xMin) && (mouseX <  w - 2*xMin-200)){
-      if((mouseY > yMin) && (mouseY < h-2*yMin)){
+      if((mouseY > yMin) && (mouseY < h - 2*yMin)){
         return true;
       }
     }
@@ -53,5 +53,9 @@ public abstract class CanvasActivity extends PaintingAppActivity{
       }
     }
     return amoutOfPaint;
+  }
+
+  public boolean isDragging(){
+    return super.dragging;
   }
 }

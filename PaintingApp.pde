@@ -52,10 +52,9 @@ void draw() {
     currentActivity.draw();
     currentActivity.update(mouseX, mouseY);
     currentActivity.mousePressed();
-  }else if (currentActivity.getState() == 1){
+  } else if (currentActivity.getState() == 1) {
     currentActivity = new GUICanvasAvtivity();
     currentActivity.draw();
-
   } else if (currentActivity.getState() >= 2) {
     background(200);
     fill(Rv);
@@ -71,10 +70,13 @@ void draw() {
     if (keyPressed == true){
       Rv = map(force, 10, 450, 225, 0);
       amoutOfPaint = (int)mag;
+    } else if (currentActivity.getState() == 4) {
+      currentActivity = new GUIColorMatchActivity();
+      currentActivity.draw();
     }
 
     fill(Rv,0,0);
-    rect(150, 300, 100, 100);
+    //rect(150, 300, 100, 100);
 
     ellipseMode(CENTER);
     lineAngle(100, 100, angle, mag);
