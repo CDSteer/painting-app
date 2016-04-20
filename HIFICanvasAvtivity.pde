@@ -1,43 +1,50 @@
-public class HIFICanvasAvtivity extends CanvasActivity implements DeformableContols{
-  // GUIPaintBrush paintBrush;
-  // GUIPaintSelector paintSelector;
-
-
-  float[] linesAngle;
-  float[] linesMag;
-  float force, angle, mag;
-  float Rv;
-  String inString;
+ public class HIFICanvasAvtivity extends CanvasActivity implements DeformableContols{
+  private HIFIPaintBrush paintBrush;
+  private GUIPaintSelector paintSelector;
+  private float force, angle, mag, Rv;
 
   public HIFICanvasAvtivity(){
-    super();
-    // paintBrush = new GUIPaintBrush();
-    // paintSelector = new GUIPaintSelector();
+    // super.setState(2);
+    this.force = 0;
+    this.angle = 0;
+    this.mag = 0;
+    this.paintBrush = new HIFIPaintBrush();
+    this.paintSelector = new GUIPaintSelector();
   }
 
   void draw(){
-    // fill(0);
-    // this.paintSelector.drawPaintSelector();
-    // this.paintBrush.drawSlider(this.paintSelector.getColor());
-    // super.draw(this.paintBrush.getSize(), this.paintSelector.getColor());
-
-    background(200);
-    fill(Rv);
+    fill(this.Rv);
     strokeWeight(4);
+
+    this.paintBrush.setSize((int)map(this.mag, 1, 100, 1, 105));
+    this.paintBrush.setColor(color((int)map(this.force, 10, 450, 0, 150), 0, 0));
+
+    super.draw(this.paintBrush.getSize(), this.paintSelector.getColor());
+
+    this.paintBrush.drawSlider(this.paintSelector.getColor());
+
+    this.paintSelector.drawPaintSelector();
+
     if (keyPressed == true){
-      Rv = map(force, 10, 450, 225, 0);
-      amoutOfPaint = (int)mag;
+      Rv = map(this.force, 10, 450, 225, 0);
+      // amoutOfPaint = (int)this.mag;
     }
-    fill(Rv,0,0);
+
+    fill(this.Rv, 0, 0);
     rect(150, 300, 100, 100);
-    ellipseMode(CENTER);
-    lineAngle(100, 100, angle, mag);
+
+    drawDirctionViz();
+
+    fill(0,0,0);
     text("HIFI Mode", 100, 100);
+
   }
 
-  public void setInString(String inString){
-    println(inString);
-    this.inString = inString;
+  void drawDirctionViz(){
+    ellipseMode(CENTER);
+    fill(255);
+    ellipse(400,200,200,200);
+    lineAngle(400, 200, this.angle, this.mag);
   }
 
   void lineAngle(int x, int y, float angle, float length) {
@@ -45,10 +52,11 @@ public class HIFICanvasAvtivity extends CanvasActivity implements DeformableCont
   }
 
   void printValues(){
-    println("force: "+ force);
-    println("red: " + Rv);
-    println(readInFloat(readInFloats[2])*100);
-    println("amount: " + amoutOfPaint);
+    println("force: "+ this.force);
+    println("angle: "+ this.angle);
+    println("mag: "+ this.mag);
+    println("red: " + this.Rv);
+    // println("amount: " + amoutOfPaint);
   }
 
   public void setForce(float force){
@@ -62,5 +70,4 @@ public class HIFICanvasAvtivity extends CanvasActivity implements DeformableCont
   }
 
   void resize(){}
-  void update(int x, int y){}
 }

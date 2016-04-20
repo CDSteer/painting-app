@@ -31,14 +31,14 @@ void draw() {
     currentActivity = new GUIColorMatchActivity();
     currentActivity.draw();
   }
-
+  if (inString != null) {
+    readInFloats = readInFloats(inString);
+  }
 }
 
 void serialEvent(Serial p) {
   inString = p.readStringUntil('\n');
-  println(inString);
-  if (inString != null && currentActivity.getState() == 2){
-    readInFloats = readInFloats(inString);
+  if (currentActivity instanceof HIFICanvasAvtivity){
     ((HIFICanvasAvtivity)currentActivity).setForce(readInFloat(readInFloats[0]));
     ((HIFICanvasAvtivity)currentActivity).setAngle(-readInFloat(readInFloats[1]));
     ((HIFICanvasAvtivity)currentActivity).setMag(readInFloat(readInFloats[2])*100);

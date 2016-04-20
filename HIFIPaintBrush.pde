@@ -10,9 +10,9 @@ public class HIFIPaintBrush extends AbstractPaintBrush {
   }
 
   public void drawSlider(color c) {
-    vs1.update();
-    this.setSize((int)map((int)vs1.getPos(), SLIDERHIGH, SLIDERLOW, 0, 105));
-    vs1.display(c);
+    // vs1.update();
+    // this.setSize((int)map((int)vs1.getPos(), SLIDERHIGH, SLIDERLOW, 0, 105));
+    // vs1.display(c);
     this.drawNib(c);
   }
 
@@ -30,7 +30,5 @@ public class HIFIPaintBrush extends AbstractPaintBrush {
     point(width-100, ypos+100);
     strokeWeight(1);
     stroke(0);
-
-
   }
 }

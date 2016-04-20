@@ -17,5 +17,4 @@ public class GUICanvasAvtivity extends CanvasActivity{
   }
 
   void resize(){}
-  void update(int x, int y){}
 }
