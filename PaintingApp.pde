@@ -27,6 +27,9 @@ void draw() {
   } else if (currentActivity.getState() == 2) {
     currentActivity = new HIFICanvasAvtivity();
     currentActivity.draw();
+  } else if (currentActivity.getState() == 2) {
+      currentActivity = new HIFICanvasAvtivity();
+      currentActivity.draw();
   } else if (currentActivity.getState() == 4) {
     currentActivity = new GUIColorMatchActivity();
     currentActivity.draw();

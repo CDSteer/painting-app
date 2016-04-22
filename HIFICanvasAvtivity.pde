@@ -1,6 +1,6 @@
  public class HIFICanvasAvtivity extends CanvasActivity implements DeformableContols{
   private HIFIPaintBrush paintBrush;
-  private GUIPaintSelector paintSelector;
+  private HIFIPaintSelector paintSelector;
   private float force, angle, mag, Rv;
 
   public HIFICanvasAvtivity(){
@@ -9,7 +9,7 @@
     this.angle = 0;
     this.mag = 0;
     this.paintBrush = new HIFIPaintBrush();
-    this.paintSelector = new GUIPaintSelector();
+    this.paintSelector = new HIFIPaintSelector();
   }
 
   void draw(){
@@ -25,13 +25,23 @@
 
     this.paintSelector.drawPaintSelector();
 
-    if (keyPressed == true){
-      Rv = map(this.force, 10, 450, 225, 0);
+    if (keyPressed && key != CODED){
+      if (key == 'r' || key == 'R') {
+        this.paintSelector.sendRed((int)this.force);
+      }
+      if (key == 'g' || key == 'G'){
+        this.paintSelector.sendGreen((int)this.force);
+      }
+      if (key == 'b' || key == 'B'){
+        this.paintSelector.sendBlue((int)this.force);
+      }
+      // Rv = map(this.force, 10, 450, 225, 0);
+      // this.paintSelector.sendInputs((int)this.force, 0, 0);
       // amoutOfPaint = (int)this.mag;
     }
 
-    fill(this.Rv, 0, 0);
-    rect(150, 300, 100, 100);
+    // fill(this.Rv, 0, 0);
+    // rect(150, 300, 100, 100);
 
     drawDirctionViz();
 
