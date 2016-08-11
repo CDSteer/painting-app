@@ -27,32 +27,30 @@ public class HIFIPaintSelector extends AbstractPaintSelector{
 
   void update(){
     vsR.update();
-    r = (int)map(this.fR, 10, 450, 0, 255);
+    r = (int)map(this.fR, 10, 700, 0, 255);
 
     vsG.update();
-    g = (int)map(this.fG, 10, 450, 0, 255);
+    g = (int)map(this.fG, 10, 700, 0, 255);
 
     vsB.update();
-    b = (int)map(this.fB, 10, 450, 0, 255);
+    b = (int)map(this.fB, 10, 700, 0, 255);
 
     super.setColor(r, g, b);
   }
 
   public void drawSliders() {
     // fill(super.pot.getPaint());
-    this.vsR.display(color(r,0,0));
+    this.vsR.display(color(r,g,b));
     // fill(super.pot.getPaint());
-    this.vsG.display(color(0,g,0));
+    this.vsG.display(color(r,g,b));
     // fill(super.pot.getPaint());
-    this.vsB.display(color(0,0,b));
+    this.vsB.display(color(r,g,b));
   }
-
   public void sendInputs(int fR, int fRG, int fB){
     this.fR = fR;
     this.fG = fG;
     this.fB = fB;
   }
-
   public void sendRed(int fR){
     this.fR = fR;
   }
@@ -62,9 +60,16 @@ public class HIFIPaintSelector extends AbstractPaintSelector{
   public void sendBlue(int fB){
     this.fB = fB;
   }
-
+  public int getRed(){
+    return this.fR;
+  }
+  public int getGreen(){
+    return this.fG;
+  }
+  public int getBlue(){
+    return this.fB;
+  }
   public color getColor(){
     return super.pot.getPaint();
   }
-
 }

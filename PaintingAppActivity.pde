@@ -7,13 +7,10 @@ public abstract class PaintingAppActivity implements AppActivity{
   public PaintingAppActivity(){
     this.state = 0;
     this.dragging = false;
-    this.backButton = new Button(200, 500, 100, color(255), "Back");
   }
 
   public void draw(){
-    fill(0);
     smooth();
-    
   }
 
 

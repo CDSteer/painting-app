@@ -1,0 +1,32 @@
+// this.paintSelector.drawPaintSelector();
+// this.paintBrush.drawSlider(this.paintSelector.getColor());
+// super.draw(this.paintBrush.getSize(), this.paintSelector.getColor());
+// text("match this", 225, 100);
+// text("your paint", 625, 100);
+// text("nib size", width-130, height-(height-350));
+//
+// text("paint", width-170, height-(height-27));
+// fill(255, 0, 0);
+// text("Red", width-220, height-(height-270));
+// fill(0, 200, 0);
+// text("Green", width-165, height-(height-270));
+// fill(0, 0, 255);
+// text("Blue", width-112, height-(height-270));
+// fill(0);
+//
+// text(randRed, 500, 600);
+// fill(randRed,0,0);
+// rect(150, 140, 100, 100);
+//
+// fill(0,randGreen,0);
+// rect(150, 340, 100, 100);
+//
+// fill(0, 0,randBlue);
+// rect(150, 540, 100, 100);
+//
+// fill(0,0,0);
+// rect(500, 140, 100, 100);
+// fill(0,0,0);
+// rect(500, 340, 100, 100);
+// fill(0,0,0);
+// rect(500, 540, 100, 100);
