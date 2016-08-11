@@ -40,11 +40,11 @@ public class HIFIPaintSelector extends AbstractPaintSelector{
 
   public void drawSliders() {
     // fill(super.pot.getPaint());
-    this.vsR.display(color(r,g,b));
+    this.vsR.display(color(r,0,0));
     // fill(super.pot.getPaint());
-    this.vsG.display(color(r,g,b));
+    this.vsG.display(color(0,g,0));
     // fill(super.pot.getPaint());
-    this.vsB.display(color(r,g,b));
+    this.vsB.display(color(0,0,b));
   }
   public void sendInputs(int fR, int fRG, int fB){
     this.fR = fR;

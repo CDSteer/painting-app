@@ -43,7 +43,7 @@ public class HIFINibMatchActivity extends CanvasActivity {
     // this.paintSelector.drawPaintSelector();
     // this.paintBrush.drawSlider(this.paintSelector.getColor());
 
-    this.paintBrush.setSize((int)map(this.mag, 1, 700, 1, 105));
+    this.paintBrush.setSize((int)map(this.mag, 1, 700, 105, 1));
 
     super.draw(this.paintBrush.getSize(), this.paintSelector.getColor());
 

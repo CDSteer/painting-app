@@ -19,15 +19,15 @@ public class HIFIPaintBrush extends AbstractPaintBrush {
   private void drawNib(color c) {
     strokeWeight(105);
     stroke(0);
-    point(width-100, ypos+100);
+    point(width-150, ypos+100);
 
-    strokeWeight(this.getSize()+2);
+    strokeWeight(this.getSize());
     stroke(255);
-    point(width-100, ypos+100);
+    point(width-150, ypos+100);
 
     strokeWeight(this.getSize());
     stroke(c);
-    point(width-100, ypos+100);
+    point(width-150, ypos+100);
     strokeWeight(1);
     stroke(0);
   }

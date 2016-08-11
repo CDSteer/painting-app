@@ -2,7 +2,6 @@
   private HIFIPaintBrush paintBrush;
   private HIFIPaintSelector paintSelector;
   private int level = 1;
-
   private float force, angle, mag, Rv;
   private float force1, mag1, force2, mag2;
 
@@ -11,64 +10,34 @@
     this.mag = 0;
     this.paintBrush = new HIFIPaintBrush();
     this.paintSelector = new HIFIPaintSelector();
+    fill(this.paintSelector.getRed(), this.paintSelector.getGreen(), this.paintSelector.getBlue());
+    rect(width-200, 260, 100, 100);
   }
 
   void draw(){
-    // fill(this.Rv);
-    // strokeWeight(4);
-    if (level == 2){
-      strokeWeight(105);
-      stroke(255);
-      // point(width-400, ypos+100);
-
-      strokeWeight((int)map(this.mag, 1, 450, 1, 105));
-      stroke(0);
-      point(width-(width/2)-200, height-(height/2));
-      strokeWeight(1);
-
-      if (keyPressed && key != CODED){
-        if (key == 't' || key == 'T') {
-          this.paintBrush.setSize((int)map(this.mag, 1, 450, 1, 105));
-        }
-      }
-    }
     if (level == 0){
-      this.paintBrush.setColor(color((int)map(this.force, 10, 450, 0, 150), 0, 0));
-      fill((int)this.force, (int)this.force1,(int)this.force2);
-      rect(150, 300, 100, 100);
-
       if (keyPressed && key != CODED){
         if (key == 'r' || key == 'R') {
           this.paintSelector.sendRed((int)this.force);
           this.paintSelector.sendGreen((int)this.force1);
           this.paintSelector.sendBlue((int)this.force2);
+          fill(this.paintSelector.getRed(), this.paintSelector.getGreen(), this.paintSelector.getBlue());
+          rect(width-200, 270, 100, 100);
+          this.paintBrush.setColor(color(this.paintSelector.getRed(), this.paintSelector.getGreen(), this.paintSelector.getBlue()));
         }
-        // if (key == 'g' || key == 'G'){
-        //   this.paintSelector.sendGreen((int)this.force);
-        // }
-        // if (key == 'b' || key == 'B'){
-        //   this.paintSelector.sendBlue((int)this.force);
-        // }
+      }
+    }
+    if (level == 2){
+      if (keyPressed && key != CODED){
+        if (key == 't' || key == 'T') {
+          this.paintBrush.setSize((int)map(this.mag, 1, 700, 72, 1));
+        }
       }
     }
     super.draw(this.paintBrush.getSize(), this.paintSelector.getColor());
     this.paintBrush.drawSlider(this.paintSelector.getColor());
     this.paintSelector.drawPaintSelector();
-
-    // this.paintSelector.sendRed((int)this.force);
-    // this.paintSelector.sendGreen((int)this.force1);
-    // this.paintSelector.sendBlue((int)this.force2);
-
-
-
-    // fill(0, 0, 0);
-    // rect(150, 300, 100, 100);
-
-    // drawDirctionViz();
-
     fill(0,0,0);
-    text("HIFI Mode", 100, 100);
-
   }
 
   void drawDirctionViz(){
@@ -116,6 +85,5 @@
   public void setLevel(int l){
     this.level = l;
   }
-
   void resize(){}
 }
