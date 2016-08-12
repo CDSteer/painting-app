@@ -21,7 +21,7 @@ public class HIFINibMatchActivity extends CanvasActivity {
   private final int xpos = width-200, ypos = height-(height-340), h = 200, w = 16, l = 16;
 
   int matchCount = 0;
-  int matchingNib[] = {60, 30, 20, 100, 70, 10, 30, 90, 50, 20};
+  int matchingNib[] = {60, 30, 20, 12, 70, 10, 30, 45, 50, 20};
 
   public HIFINibMatchActivity(){
     super();

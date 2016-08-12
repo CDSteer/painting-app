@@ -34,7 +34,7 @@
         }
       }
     }
-    super.draw(this.paintBrush.getSize(), this.paintSelector.getColor());
+    super.draw(this.paintBrush.getSize(), this.paintBrush.getColor());
     this.paintBrush.drawSlider(this.paintSelector.getColor());
     this.paintSelector.drawPaintSelector();
     fill(0,0,0);
