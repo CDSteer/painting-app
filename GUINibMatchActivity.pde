@@ -13,6 +13,9 @@ public class GUINibMatchActivity extends CanvasActivity {
   private int startTime;
   private float[] times = new float[10];
 
+  private String interfaceType = "gui";
+  private String mode = "nibMatch";
+
   private final int SLIDERLOW = 568;
   private final int SLIDERHIGH = 370;
   private final int xpos = width-200, ypos = height-(height-340), h = 200, w = 16, l = 16;
@@ -70,6 +73,8 @@ public class GUINibMatchActivity extends CanvasActivity {
         newRow.setString("time", String.valueOf(times[i]));
       }
       delay(500);
+      fileName = ("data/" + pNum + "-" + interfaceType + "-" + mode + ".csv");
+      saveTable(table, fileName);
       this.setState(0);
       currentActivity = new MenuActivity();
     } else if (this.paintBrush.getSize() == matchingNib[matchCount]){

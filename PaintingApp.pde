@@ -24,7 +24,7 @@ void setup() {
   table.addColumn("value-type");
   table.addColumn("value");
   table.addColumn("time");
-  fileName = ("data/" + pNum + ".csv");
+
 
   currentActivity = new MenuActivity();
   size(1250, 750);
@@ -84,7 +84,6 @@ private void prepareExitHandler () {
   Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
   public void run() {
     System.out.println("SHUTDOWN HOOK");
-    saveTable(table, fileName);
   }
   }));
 }

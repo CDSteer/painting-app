@@ -9,9 +9,12 @@ public class HIFIColorMatchActivity extends CanvasActivity {
   private int startTime;
   private float[] times = new float[10];
   int matchCount = 0;
-  int matchingColorsRGB[] = {1,2,3};
-  int matchingColorsDepth[] = {100,255,200};
+  private int matchingColorsRGB[] = {1, 3, 2, 2, 1, 1, 3, 1, 3, 2};
+  private int matchingColorsDepth[] = {100, 255, 200, 100, 255, 200, 100, 255, 200, 50};
   private int redMatch, blueMatch, greenMatch;
+
+  private String interfaceType = "defomable";
+  private String mode = "colourMatch";
 
   public HIFIColorMatchActivity(){
     super();
@@ -25,6 +28,8 @@ public class HIFIColorMatchActivity extends CanvasActivity {
   void setup(){
     this.canvas = new Canvas(500, 140, 300, 300);
     this.drawCanvas();
+    this.setLevel(0);
+    myPort.write('l');
   }
 
   void drawCanvas(){
@@ -45,6 +50,10 @@ public class HIFIColorMatchActivity extends CanvasActivity {
         newRow.setString("time", String.valueOf(times[i]));
       }
       delay(500);
+      this.setLevel(1);
+      myPort.write('m');
+      fileName = ("data/" + pNum + "-" + interfaceType + "-" + mode + ".csv");
+      saveTable(table, fileName);
       this.setState(0);
       currentActivity = new MenuActivity();
     } else {
@@ -75,7 +84,7 @@ public class HIFIColorMatchActivity extends CanvasActivity {
           case 3:
             fill(0,0,matchingColorsDepth[matchCount]);
             rect(550, 140, 100, 100);
-            this.paintSelector.sendBlue((int)this.force2);
+            this.paintSelector.sendBlue((int)this.force1);
             fill(0,0,this.paintSelector.getBlue());
             rect(550, 340, 100, 100);
             if (matchingColorsDepth[matchCount] == this.paintSelector.getBlue()){

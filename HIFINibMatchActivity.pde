@@ -9,6 +9,8 @@ public class HIFINibMatchActivity extends CanvasActivity {
   private int level, randRed, randBlue, randGreen;
   private int redMatch, blueMatch, greenMatch;
   private String inputValue;
+  private String interfaceType = "defomable";
+  private String mode = "nibMatch";
 
   private int startTime;
   private float[] times = new float[10];
@@ -32,6 +34,8 @@ public class HIFINibMatchActivity extends CanvasActivity {
   void setup(){
     this.canvas = new Canvas(500, 140, 300, 300);
     this.drawCanvas();
+    this.setLevel(2);
+    myPort.write('h');
   }
 
   void drawCanvas(){
@@ -73,6 +77,10 @@ public class HIFINibMatchActivity extends CanvasActivity {
         newRow.setString("time", String.valueOf(times[i]));
       }
       delay(500);
+      fileName = ("data/" + pNum + "-" + interfaceType + "-" + mode + ".csv");
+      saveTable(table, fileName);
+      this.setLevel(1);
+      myPort.write('m');
       this.setState(0);
       currentActivity = new MenuActivity();
     } else if (this.paintBrush.getSize() == matchingNib[matchCount]){

@@ -13,6 +13,9 @@ public class GUIColorMatchActivity extends CanvasActivity {
   private float force, angle, mag, Rv;
   private float force1, mag1, force2, mag2;
 
+  private String interfaceType = "gui";
+  private String mode = "colourMatch";
+
   private int startTime;
   private float[] times = new float[10];
 
@@ -53,6 +56,8 @@ public class GUIColorMatchActivity extends CanvasActivity {
         newRow.setString("time", String.valueOf(times[i]));
       }
       delay(500);
+      fileName = ("data/" + pNum + "-" + interfaceType + "-" + mode + ".csv");
+      saveTable(table, fileName);
       this.setState(0);
       currentActivity = new MenuActivity();
     } else {
