@@ -42,7 +42,7 @@ public class GUINibMatchActivity extends CanvasActivity {
   public void draw(){
     background(200);
     parceInput();
-    this.paintBrush.setSize(nib);
+    this.paintBrush.setSize(this.green);
     // this.paintSelector.drawPaintSelector();
     // this.paintBrush.drawSlider(this.paintSelector.getColor());
     super.draw(this.paintBrush.getSize(), this.paintSelector.getColor());

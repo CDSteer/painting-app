@@ -94,10 +94,10 @@ void serialEvent(Serial p) {
   if (currentActivity instanceof HIFICanvasAvtivity){
     // ((HIFICanvasAvtivity)currentActivity).setForce(readInFloat(readInFloats[0]));
     ((HIFICanvasAvtivity)currentActivity).setForce(inByte1);
-    ((HIFICanvasAvtivity)currentActivity).setMag(inByte2);
+    ((HIFICanvasAvtivity)currentActivity).setMag(h1InByte2);
     ((HIFICanvasAvtivity)currentActivity).setForce1(h1InByte1);
     ((HIFICanvasAvtivity)currentActivity).setMag1(h1InByte2);
-    ((HIFICanvasAvtivity)currentActivity).setForce2(h2InByte1);
+    ((HIFICanvasAvtivity)currentActivity).setForce2(h2InByte2);
     ((HIFICanvasAvtivity)currentActivity).setMag2(h2InByte2);
     // ((HIFICanvasAvtivity)currentActivity).setAngle(-readInFloat(readInFloats[1]));
     // ((HIFICanvasAvtivity)currentActivity).setMag(readInFloat(readInFloats[2])*100);
@@ -106,7 +106,7 @@ void serialEvent(Serial p) {
     ((HIFIColorMatchActivity)currentActivity).setMag(inByte2);
     ((HIFIColorMatchActivity)currentActivity).setForce1(h1InByte1);
     ((HIFIColorMatchActivity)currentActivity).setMag1(h1InByte2);
-    ((HIFIColorMatchActivity)currentActivity).setForce2(h2InByte1);
+    ((HIFIColorMatchActivity)currentActivity).setForce2(h2InByte2);
     ((HIFIColorMatchActivity)currentActivity).setMag2(h2InByte2);
   } else if (currentActivity instanceof HIFINibMatchActivity){
     ((HIFINibMatchActivity)currentActivity).setForce(inByte1);

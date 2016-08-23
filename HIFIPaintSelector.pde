@@ -27,13 +27,13 @@ public class HIFIPaintSelector extends AbstractPaintSelector{
 
   void update(){
     vsR.update();
-    r = (int)map(this.fR, 10, 700, 0, 255);
+    r = (int)map(this.fR, 10, 600, 0, 255);
 
     vsG.update();
-    g = (int)map(this.fG, 10, 700, 0, 255);
+    g = (int)map(this.fG, 10, 600, 0, 255);
 
     vsB.update();
-    b = (int)map(this.fB, 10, 700, 0, 255);
+    b = (int)map(this.fB, 10, 600, 0, 255);
 
     super.setColor(r, g, b);
   }
@@ -61,13 +61,13 @@ public class HIFIPaintSelector extends AbstractPaintSelector{
     this.fB = fB;
   }
   public int getRed(){
-    return this.fR;
+    return this.r;
   }
   public int getGreen(){
-    return this.fG;
+    return this.g;
   }
   public int getBlue(){
-    return this.fB;
+    return this.b;
   }
   public color getColor(){
     return super.pot.getPaint();

@@ -65,8 +65,10 @@ public class HIFIColorMatchActivity extends CanvasActivity {
             rect(150, 140, 100, 100);
             fill(0);
             this.paintSelector.sendRed((int)this.force);
+            this.paintSelector.update();
             fill(this.paintSelector.getRed(),0,0);
             rect(150, 340, 100, 100);
+            println(this.paintSelector.getRed());
             if (matchingColorsDepth[matchCount] == this.paintSelector.getRed()){
               match();
             }
@@ -75,8 +77,10 @@ public class HIFIColorMatchActivity extends CanvasActivity {
             fill(0,matchingColorsDepth[matchCount],0);
             rect(350, 140, 100, 100);
             this.paintSelector.sendGreen((int)this.force1);
+            this.paintSelector.update();
             fill(0,this.paintSelector.getGreen(),0);
             rect(350, 340, 100, 100);
+            println(this.paintSelector.getGreen());
             if (matchingColorsDepth[matchCount] == this.paintSelector.getGreen()){
               match();
             }
@@ -85,8 +89,10 @@ public class HIFIColorMatchActivity extends CanvasActivity {
             fill(0,0,matchingColorsDepth[matchCount]);
             rect(550, 140, 100, 100);
             this.paintSelector.sendBlue((int)this.force1);
+            this.paintSelector.update();
             fill(0,0,this.paintSelector.getBlue());
             rect(550, 340, 100, 100);
+            println(this.paintSelector.getBlue());
             if (matchingColorsDepth[matchCount] == this.paintSelector.getBlue()){
               match();
             }

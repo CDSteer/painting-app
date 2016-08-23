@@ -16,16 +16,16 @@
 
   void draw(){
     if (level == 0){
-      if (keyPressed && key != CODED){
-        if (key == 'r' || key == 'R') {
+      // if (keyPressed && key != CODED){
+        // if (key == 'r' || key == 'R') {
           this.paintSelector.sendRed((int)this.force);
           this.paintSelector.sendGreen((int)this.force1);
           this.paintSelector.sendBlue((int)this.force2);
           fill(this.paintSelector.getRed(), this.paintSelector.getGreen(), this.paintSelector.getBlue());
           rect(width-200, 270, 100, 100);
           this.paintBrush.setColor(color(this.paintSelector.getRed(), this.paintSelector.getGreen(), this.paintSelector.getBlue()));
-        }
-      }
+        // }
+      // }
     }
     if (level == 2){
       if (keyPressed && key != CODED){

@@ -47,7 +47,7 @@ public class GUIColorMatchActivity extends CanvasActivity {
     if (matchCount == 9) {
       background(200);
       text("Tasks complete", width/2, height/2);
-      for(int i=0; i < times.length; i++){
+      for(int i=0; i < times.length-1; i++){
         print("  "  + times[i]);
         TableRow newRow = table.addRow();
         newRow.setInt("id", table.getRowCount() - 1);
