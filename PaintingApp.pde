@@ -8,13 +8,11 @@ String inString;
 String[] readInFloats;
 float inByte = 0;
 float inByte1, inByte2, h1InByte1, h1InByte2, h2InByte1, h2InByte2;
-
 String guiInput;
 int forceValue;
 SocketServer mSocketServer;
 String[] qtmp;
 String[] qtmp2;
-
 String pNum = "p1";
 String fileName;
 Table table;
@@ -79,9 +77,6 @@ void draw() {
     ((GUINibMatchActivity)currentActivity).setInputValue(guiInput);
   }
 }
-
-
-
 private void prepareExitHandler () {
   Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
   public void run() {
@@ -170,7 +165,7 @@ void readInFloats(String inString){
 
 void mousePressed(){
   if (currentActivity instanceof HIFIColorMatchActivity){
-    // ((HIFIColorMatchActivity)currentActivity).clickNext();
+    ((HIFIColorMatchActivity)currentActivity).clickNext();
   }
   if (currentActivity instanceof GUIColorMatchActivity){
     ((GUIColorMatchActivity)currentActivity).clickNext();

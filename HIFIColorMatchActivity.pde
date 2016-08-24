@@ -11,15 +11,15 @@ public class HIFIColorMatchActivity extends CanvasActivity {
 
   int matchCount = 0;
   private int matchingMode[] = {0, 1, 1, 0, 1, 1, 0, 1, 1, 0};
-
   private int matchingNib[] = {60, 30, 20, 12, 70, 10, 30, 45, 50, 20};
-
   private int matchingColorsRGB[] = {2, 1, 3, 2, 1, 1, 3, 1, 3, 2};
   private int matchingColorsDepth[] = {100, 255, 200, 100, 255, 200, 100, 255, 200, 50};
   private String[] userValues = new String[9];;
 
   private String interfaceType = "defomable";
   private boolean match = false;
+  private Button nextButton;
+  private boolean hoverbutton = false;
 
   int[] rgb;
   int[] rgbMatch;
@@ -31,6 +31,7 @@ public class HIFIColorMatchActivity extends CanvasActivity {
     randRed = randInt(50,250);
     randBlue = randInt(50,250);
     randGreen = randInt(50,250);
+    nextButton = new Button(width/2, height-200, 100, 50, color(255), "Next");
   }
 
   void setup(){
@@ -46,6 +47,7 @@ public class HIFIColorMatchActivity extends CanvasActivity {
 
   public void draw(){
     background(200);
+    nextButton.draw();
     rgb = ryb2rgb(map(this.force, 10, 600, 0, 255), map(this.force1, 10, 600, 0, 255), map(this.force2, 10, 600, 0, 255));
     this.paintSelector.sendBlue(this.rgb[RED]);
     this.paintSelector.sendGreen(this.rgb[GREEN]);
@@ -123,6 +125,19 @@ public class HIFIColorMatchActivity extends CanvasActivity {
       if (key == 'n' || key == 'N') {
         match();
       }
+    }
+    if (this.nextButton.inBounds(mouseX, mouseY)){
+      this.hoverbutton = true;
+      this.nextButton.hightlight();
+    } else {
+      this.hoverbutton = false;
+      this.nextButton.deHightlight();
+    }
+  }
+
+  void clickNext() {
+    if (this.hoverbutton = true){
+      match();
     }
   }
 
