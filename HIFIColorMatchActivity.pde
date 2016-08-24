@@ -8,17 +8,25 @@ public class HIFIColorMatchActivity extends CanvasActivity {
   private int level, randRed, randBlue, randGreen;
   private int startTime;
   private float[] times = new float[10];
+
   int matchCount = 0;
-  private int matchingColorsRGB[] = {1, 3, 2, 2, 1, 1, 3, 1, 3, 2};
+  private int matchingMode[] = {0, 1, 1, 0, 1, 1, 0, 1, 1, 0};
+
+  private int matchingNib[] = {60, 30, 20, 12, 70, 10, 30, 45, 50, 20};
+
+  private int matchingColorsRGB[] = {2, 1, 3, 2, 1, 1, 3, 1, 3, 2};
   private int matchingColorsDepth[] = {100, 255, 200, 100, 255, 200, 100, 255, 200, 50};
-  private int redMatch, blueMatch, greenMatch;
+  private String[] userValues = new String[9];;
 
   private String interfaceType = "defomable";
-  private String mode = "colourMatch";
+  private boolean match = false;
+
+  int[] rgb;
+  int[] rgbMatch;
 
   public HIFIColorMatchActivity(){
     super();
-    // this.paintBrush = new HIFIPaintBrush();
+    this.paintBrush = new HIFIPaintBrush();
     this.paintSelector = new HIFIPaintSelector();
     randRed = randInt(50,250);
     randBlue = randInt(50,250);
@@ -38,6 +46,11 @@ public class HIFIColorMatchActivity extends CanvasActivity {
 
   public void draw(){
     background(200);
+    rgb = ryb2rgb(map(this.force, 10, 600, 0, 255), map(this.force1, 10, 600, 0, 255), map(this.force2, 10, 600, 0, 255));
+    this.paintSelector.sendBlue(this.rgb[RED]);
+    this.paintSelector.sendGreen(this.rgb[GREEN]);
+    this.paintSelector.sendBlue(this.rgb[BLUE]);
+    this.paintSelector.update();
     if (matchCount == 9) {
       background(200);
       text("Tasks complete", width/2, height/2);
@@ -45,75 +58,71 @@ public class HIFIColorMatchActivity extends CanvasActivity {
         print("  "  + times[i]);
         TableRow newRow = table.addRow();
         newRow.setInt("id", table.getRowCount() - 1);
-        newRow.setString("value-type", "colour");
-        newRow.setString("value", Integer.toString(matchingColorsDepth[i]));
+        if (matchingMode[i] == 0){
+          newRow.setString("value-type", "colour");
+        } else if (matchingMode[i] == 1){
+          newRow.setString("value-type", "nib");
+        }
+        newRow.setString("computer-value", Integer.toString(matchingColorsDepth[i]));
+        newRow.setString("user-value", (userValues[i]));
         newRow.setString("time", String.valueOf(times[i]));
       }
       delay(500);
       this.setLevel(1);
       myPort.write('m');
-      fileName = ("data/" + pNum + "-" + interfaceType + "-" + mode + ".csv");
+      fileName = ("data/" + pNum + "-" + interfaceType + ".csv");
       saveTable(table, fileName);
       this.setState(0);
       currentActivity = new MenuActivity();
     } else {
-      if (level == 0 ){
+      if (matchingMode[matchCount] == 0 ){
         rectMode(CENTER);
         switch (matchingColorsRGB[matchCount]) {
           case 1:
-            fill(matchingColorsDepth[matchCount],0,0);
+            rgbMatch = ryb2rgb(matchingColorsDepth[matchCount],0,0);
+            fill(rgbMatch[RED],rgbMatch[GREEN],rgbMatch[BLUE]);
             rect(150, 140, 100, 100);
             fill(0);
-            this.paintSelector.sendRed((int)this.force);
-            this.paintSelector.update();
-            fill(this.paintSelector.getRed(),0,0);
+            fill(this.rgb[RED],this.rgb[GREEN],this.rgb[BLUE]);
             rect(150, 340, 100, 100);
-            println(this.paintSelector.getRed());
-            if (matchingColorsDepth[matchCount] == this.paintSelector.getRed()){
-              match();
-            }
             break;
           case 2:
-            fill(0,matchingColorsDepth[matchCount],0);
+            rgbMatch = ryb2rgb(0,matchingColorsDepth[matchCount],0);
+            fill(rgbMatch[RED],rgbMatch[GREEN],rgbMatch[BLUE]);
             rect(350, 140, 100, 100);
-            this.paintSelector.sendGreen((int)this.force1);
-            this.paintSelector.update();
-            fill(0,this.paintSelector.getGreen(),0);
+            fill(this.rgb[RED],this.rgb[GREEN],this.rgb[BLUE]);
             rect(350, 340, 100, 100);
-            println(this.paintSelector.getGreen());
-            if (matchingColorsDepth[matchCount] == this.paintSelector.getGreen()){
-              match();
-            }
             break;
           case 3:
-            fill(0,0,matchingColorsDepth[matchCount]);
+            rgbMatch = ryb2rgb(0,0,matchingColorsDepth[matchCount]);
+            fill(rgbMatch[RED],rgbMatch[GREEN],rgbMatch[BLUE]);
             rect(550, 140, 100, 100);
-            this.paintSelector.sendBlue((int)this.force1);
-            this.paintSelector.update();
-            fill(0,0,this.paintSelector.getBlue());
+            fill(this.rgb[RED],this.rgb[GREEN],this.rgb[BLUE]);
             rect(550, 340, 100, 100);
-            println(this.paintSelector.getBlue());
-            if (matchingColorsDepth[matchCount] == this.paintSelector.getBlue()){
-              match();
-            }
             break;
         }
         rectMode(CORNER);
+        userValues[matchCount] = (this.rgb[RED]+":"+this.rgb[GREEN]+":"+this.rgb[BLUE]);
+      } else if (matchingMode[matchCount] == 1){
+        this.paintBrush.setSize((int)map(this.mag1, 1, 700, 105, 1));
+        super.draw(this.paintBrush.getSize(), this.paintSelector.getColor());
+        strokeWeight(105);
+        stroke(0);
+        strokeWeight(matchingNib[matchCount]);
+        stroke(255);
+        point(width-(width/2)-200, height-(height/2));
+        strokeWeight(this.paintBrush.getSize());
+        stroke(255);
+        point(width-(width/2)+200, height-(height/2));
+        strokeWeight(1);
+        stroke(0);
+        userValues[matchCount] = Integer.toString(this.paintBrush.getSize());
       }
     }
-
-    if (keyPressed) {
-      if (key == 'r') {
-        matchCount = 0;
-      } else if (key == 'g') {
-        matchCount = 1;
-      } else if (key == 'b') {
-        matchCount = 2;
+    if (match == true) {
+      if (key == 'n' || key == 'N') {
+        match();
       }
-    }
-
-    if (level == 2){
-      this.paintBrush.setSize((int)map(this.mag, 1, 700, 1, 105));
     }
   }
 
@@ -123,24 +132,11 @@ public class HIFIColorMatchActivity extends CanvasActivity {
     println(times[matchCount]);
     matchCount++;
     startTime = millis();
+    match = false;
   }
 
-  private void colorMatchCheck(){
-    if (redMatch == 1){
-      fill(randRed,0,0);
-      text("Paint Matched", 600, 140);
-      rect(500, 140, 100, 100);
-    }
-    if (greenMatch == 1){
-      fill(0,randGreen,0);
-      text("Paint Matched", 600, 340);
-      rect(500, 340, 100, 100);
-    }
-    if (blueMatch == 1){
-      fill(0,0,randBlue);
-      text("Paint Matched", 600, 540);
-      rect(500, 540, 100, 100);
-    }
+  void setMatch(){
+    match = true;
   }
 
   void paint(int size, color c) {
@@ -187,7 +183,4 @@ public class HIFIColorMatchActivity extends CanvasActivity {
     int randomNum = rand.nextInt((max - min) + 1) + min;
     return randomNum;
   }
-
-
-
 }

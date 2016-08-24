@@ -1,5 +1,7 @@
 import processing.serial.*;
-
+final int RED = 0;
+final int GREEN = 1;
+final int BLUE = 2;
 Serial myPort;
 PaintingAppActivity currentActivity;
 String inString;
@@ -22,9 +24,9 @@ void setup() {
   table = new Table();
   table.addColumn("id");
   table.addColumn("value-type");
-  table.addColumn("value");
+  table.addColumn("computer-value");
+  table.addColumn("user-value");
   table.addColumn("time");
-
 
   currentActivity = new MenuActivity();
   size(1250, 750);
@@ -106,8 +108,9 @@ void serialEvent(Serial p) {
     ((HIFIColorMatchActivity)currentActivity).setMag(inByte2);
     ((HIFIColorMatchActivity)currentActivity).setForce1(h1InByte1);
     ((HIFIColorMatchActivity)currentActivity).setMag1(h1InByte2);
-    ((HIFIColorMatchActivity)currentActivity).setForce2(h2InByte2);
+    ((HIFIColorMatchActivity)currentActivity).setForce2(0);
     ((HIFIColorMatchActivity)currentActivity).setMag2(h2InByte2);
+    // println(inByte + ", " + h1InByte1 + ", " + h2InByte2);
   } else if (currentActivity instanceof HIFINibMatchActivity){
     ((HIFINibMatchActivity)currentActivity).setForce(inByte1);
     ((HIFINibMatchActivity)currentActivity).setMag(inByte2);
@@ -165,7 +168,17 @@ void readInFloats(String inString){
   }
 }
 
+void mousePressed(){
+  if (currentActivity instanceof HIFIColorMatchActivity){
+    // ((HIFIColorMatchActivity)currentActivity).clickNext();
+  }
+  if (currentActivity instanceof GUIColorMatchActivity){
+    ((GUIColorMatchActivity)currentActivity).clickNext();
+  }
+}
+
 void keyPressed() {
+
   if (key == CODED) {
     if (currentActivity instanceof HIFICanvasAvtivity || currentActivity instanceof HIFIColorMatchActivity){
       if (keyCode == UP) {
@@ -209,4 +222,68 @@ void keyPressed() {
   } else if (key == 'x' || key == 'X') {
     myPort.write('x');
   }
+  if (key == 'n' || key == 'N') {
+    if (currentActivity instanceof HIFIColorMatchActivity){
+      ((HIFIColorMatchActivity)currentActivity).setMatch();
+    }
+    if (currentActivity instanceof GUIColorMatchActivity){
+      ((GUIColorMatchActivity)currentActivity).setMatch();
+    }
+  }
+}
+
+int[] ryb2rgb(double iRed, double iYellow, double iBlue) {
+  double iWhite = min(iRed, iYellow, iBlue);
+
+  iRed -= iWhite;
+  iYellow -= iWhite;
+  iBlue -= iWhite;
+
+  double iMaxYellow = max(iRed, iYellow, iBlue);
+  double iGreen = Math.min(iYellow, iBlue);
+
+  iYellow -= iGreen;
+  iBlue   -= iGreen;
+
+  if (iBlue > 0 && iGreen > 0){
+    iBlue  *= 2.0;
+    iGreen *= 2.0;
+  }
+
+  iRed   += iYellow;
+  iGreen += iYellow;
+
+  double iMaxGreen = max(iRed, iGreen, iBlue);
+
+  if (iMaxGreen > 0){
+    double iN = iMaxYellow / iMaxGreen;
+    iRed   *= iN;
+    iGreen *= iN;
+    iBlue  *= iN;
+  }
+
+  iRed   += iWhite;
+  iGreen += iWhite;
+  iBlue  += iWhite;
+
+  int rgb[] = {(int)Math.floor(iRed), (int)Math.floor(iGreen), (int)Math.floor(iBlue)};
+  return rgb;
+}
+
+double max(double... n) {
+    int i = 0;
+    double max = n[i];
+    while (++i < n.length)
+        if (n[i] > max)
+            max = n[i];
+    return max;
+}
+
+double min(double... n) {
+    int i = 0;
+    double min = n[i];
+    while (++i < n.length)
+        if (n[i] < min)
+            min = n[i];
+    return min;
 }

@@ -5,6 +5,8 @@
   private float force, angle, mag, Rv;
   private float force1, mag1, force2, mag2;
 
+  private int[] rgb;
+
   public HIFICanvasAvtivity(){
     this.angle = 0;
     this.mag = 0;
@@ -15,15 +17,17 @@
   }
 
   void draw(){
+    rgb = ryb2rgb(map(this.force, 10, 600, 0, 255), map(this.force1, 10, 600, 0, 255), map(this.force2, 10, 600, 0, 255));
+    // this.paintSelector.sendBlue(this.rgb[RED]);
+    // this.paintSelector.sendGreen(this.rgb[GREEN]);
+    // this.paintSelector.sendBlue(this.rgb[BLUE]);
+    // this.paintSelector.update();
     if (level == 0){
       // if (keyPressed && key != CODED){
         // if (key == 'r' || key == 'R') {
-          this.paintSelector.sendRed((int)this.force);
-          this.paintSelector.sendGreen((int)this.force1);
-          this.paintSelector.sendBlue((int)this.force2);
-          fill(this.paintSelector.getRed(), this.paintSelector.getGreen(), this.paintSelector.getBlue());
+          fill(rgb[RED],rgb[GREEN],rgb[BLUE]);
           rect(width-200, 270, 100, 100);
-          this.paintBrush.setColor(color(this.paintSelector.getRed(), this.paintSelector.getGreen(), this.paintSelector.getBlue()));
+          this.paintBrush.setColor(color(rgb[RED],rgb[GREEN],rgb[BLUE]));
         // }
       // }
     }

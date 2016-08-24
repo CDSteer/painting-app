@@ -30,10 +30,10 @@ public class HIFIPaintSelector extends AbstractPaintSelector{
     r = (int)map(this.fR, 10, 600, 0, 255);
 
     vsG.update();
-    g = (int)map(this.fG, 10, 600, 0, 255);
+    g = (int)map(this.fG, 0, 650, 0, 255);
 
     vsB.update();
-    b = (int)map(this.fB, 10, 600, 0, 255);
+    b = (int)map(this.fB, 0, 650, 0, 255);
 
     super.setColor(r, g, b);
   }
