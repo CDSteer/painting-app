@@ -170,6 +170,9 @@ void mousePressed(){
   if (currentActivity instanceof GUIColorMatchActivity){
     ((GUIColorMatchActivity)currentActivity).clickNext();
   }
+  if (currentActivity instanceof HIFICanvasAvtivity){
+    ((HIFICanvasAvtivity)currentActivity).click();
+  }
 }
 
 void keyPressed() {

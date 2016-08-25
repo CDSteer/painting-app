@@ -7,41 +7,70 @@
 
   private int[] rgb;
 
+  private Button nibMode;
+  private Button paintMode;
+  private boolean hoverNibMode = false;
+  private boolean hoverPaintMode = false;
+
   public HIFICanvasAvtivity(){
     this.angle = 0;
     this.mag = 0;
     this.paintBrush = new HIFIPaintBrush();
     this.paintSelector = new HIFIPaintSelector();
     fill(this.paintSelector.getRed(), this.paintSelector.getGreen(), this.paintSelector.getBlue());
-    rect(width-200, 260, 100, 100);
+    rect(width-200, 100, 100, 100);
+    nibMode = new Button(width-200, 250, 100, 50, color(255), "Paint");
+    paintMode = new Button(width-200, height-220, 100, 50, color(255), "Nib");
   }
 
   void draw(){
+    nibMode.draw();
+    paintMode.draw();
     rgb = ryb2rgb(map(this.force, 10, 600, 0, 255), map(this.force1, 10, 600, 0, 255), map(this.force2, 10, 600, 0, 255));
     // this.paintSelector.sendBlue(this.rgb[RED]);
     // this.paintSelector.sendGreen(this.rgb[GREEN]);
     // this.paintSelector.sendBlue(this.rgb[BLUE]);
     // this.paintSelector.update();
     if (level == 0){
-      // if (keyPressed && key != CODED){
-        // if (key == 'r' || key == 'R') {
-          fill(rgb[RED],rgb[GREEN],rgb[BLUE]);
-          rect(width-200, 270, 100, 100);
-          this.paintBrush.setColor(color(rgb[RED],rgb[GREEN],rgb[BLUE]));
-        // }
-      // }
+      fill(rgb[RED],rgb[GREEN],rgb[BLUE]);
+      rect(width-200, 100, 100, 100);
+      this.paintBrush.setColor(color(rgb[RED],rgb[GREEN],rgb[BLUE]));
     }
     if (level == 2){
-      if (keyPressed && key != CODED){
-        if (key == 't' || key == 'T') {
-          this.paintBrush.setSize((int)map(this.mag, 1, 700, 72, 1));
-        }
-      }
+      this.paintBrush.setSize((int)map(this.mag, 1, 700, 72, 1));
     }
     super.draw(this.paintBrush.getSize(), this.paintBrush.getColor());
     this.paintBrush.drawSlider(this.paintSelector.getColor());
-    this.paintSelector.drawPaintSelector();
+    // this.paintSelector.drawPaintSelector();
     fill(0,0,0);
+
+    if (this.paintMode.inBounds(mouseX, mouseY)){
+      this.hoverPaintMode = true;
+      this.hoverNibMode = false;
+      this.nibMode.deHightlight();
+      this.paintMode.hightlight();
+    } else if (this.nibMode.inBounds(mouseX, mouseY)){
+      this.hoverNibMode = true;
+      this.hoverPaintMode = false;
+      this.paintMode.deHightlight();
+      this.nibMode.hightlight();
+    } else {
+      this.hoverNibMode = false;
+      this.hoverPaintMode = false;
+      this.paintMode.deHightlight();
+      this.nibMode.deHightlight();
+    }
+  }
+
+  void click(){
+    if (this.hoverPaintMode == true){
+      level = 2;
+      myPort.write('h');
+    }
+    if (this.hoverNibMode == true) {
+      level = 0;
+      myPort.write('l');
+    }
   }
 
   void drawDirctionViz(){

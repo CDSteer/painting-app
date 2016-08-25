@@ -18,7 +18,7 @@ public class Button extends AbstractGUIElement{
 
     textSize(14);
     fill(0);
-    text(this.text, this.getX() + (this.getWidth()/5), this.getY() + (getHeight()/2));
+    text(this.text, this.getX() + (this.getWidth()/4), this.getY() + (getHeight()/2));
   }
 
   void hightlight(){

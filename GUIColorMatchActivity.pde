@@ -202,6 +202,7 @@ public class GUIColorMatchActivity extends CanvasActivity {
       }
   }
   private void parceInput(){
+    println(inputValue);
     if (inputValue != null) {
       String[] qtmp = splitTokens(inputValue, ":");
       if (qtmp.length == 2){

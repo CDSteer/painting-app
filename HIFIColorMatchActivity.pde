@@ -20,6 +20,7 @@ public class HIFIColorMatchActivity extends CanvasActivity {
   private boolean match = false;
   private Button nextButton;
   private boolean hoverbutton = false;
+  private boolean trigger = false;
 
   int[] rgb;
   int[] rgbMatch;
@@ -38,7 +39,6 @@ public class HIFIColorMatchActivity extends CanvasActivity {
     this.canvas = new Canvas(500, 140, 300, 300);
     this.drawCanvas();
     this.setLevel(0);
-    myPort.write('l');
   }
 
   void drawCanvas(){
@@ -56,7 +56,7 @@ public class HIFIColorMatchActivity extends CanvasActivity {
     if (matchCount == 9) {
       background(200);
       text("Tasks complete", width/2, height/2);
-      for(int i=0; i < times.length; i++){
+      for(int i=0; i < times.length-1; i++){
         print("  "  + times[i]);
         TableRow newRow = table.addRow();
         newRow.setInt("id", table.getRowCount() - 1);
@@ -104,6 +104,10 @@ public class HIFIColorMatchActivity extends CanvasActivity {
             break;
         }
         rectMode(CORNER);
+        if (!trigger) {
+          myPort.write('l');
+          trigger = true;
+        }
         userValues[matchCount] = (this.rgb[RED]+":"+this.rgb[GREEN]+":"+this.rgb[BLUE]);
       } else if (matchingMode[matchCount] == 1){
         this.paintBrush.setSize((int)map(this.mag1, 1, 700, 105, 1));
@@ -118,6 +122,10 @@ public class HIFIColorMatchActivity extends CanvasActivity {
         point(width-(width/2)+200, height-(height/2));
         strokeWeight(1);
         stroke(0);
+        if (!trigger) {
+          myPort.write('h');
+          trigger = true;
+        }
         userValues[matchCount] = Integer.toString(this.paintBrush.getSize());
       }
     }
@@ -147,6 +155,7 @@ public class HIFIColorMatchActivity extends CanvasActivity {
     println(times[matchCount]);
     matchCount++;
     startTime = millis();
+    trigger = false;
     match = false;
   }
 
