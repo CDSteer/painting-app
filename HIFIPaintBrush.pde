@@ -9,22 +9,16 @@ public class HIFIPaintBrush extends AbstractPaintBrush {
     vs1 = new VScrollbar(xpos, ypos, w, h, l);
   }
 
-  public void drawSlider(color c) {
-    this.drawNib(c);
+  public void drawSlider(color c, int nib) {
+    this.drawNib(c, nib );
   }
 
-  private void drawNib(color c) {
+  private void drawNib(color c, int nib) {
     strokeWeight(105);
     stroke(0);
     point(width-150, ypos+100);
-
-    strokeWeight(this.getSize());
-    stroke(255);
-    point(width-150, ypos+100);
-
-    strokeWeight(this.getSize());
-    stroke(255);
-    point(width-150, ypos+100);
+    image(changeImgColor(nibs[nib], 255, 255, 255), (float)width-175, (float)ypos+75, (float)this.getSize(), (float)this.getSize());
+    // point(width-150, ypos+100);
     strokeWeight(1);
     stroke(0);
   }

@@ -12,7 +12,7 @@ public class GUICanvasAvtivity extends CanvasActivity{
     fill(0);
     this.paintSelector.drawPaintSelector();
     this.paintBrush.drawSlider(this.paintSelector.getColor());
-    super.draw(this.paintBrush.getSize(), this.paintSelector.getColor());
+    // super.draw(this.paintBrush.getSize(), this.paintSelector.getColor());
     text("GUI Mode", 100, 100);
   }
 

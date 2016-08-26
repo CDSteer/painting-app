@@ -16,14 +16,20 @@ String[] qtmp2;
 String pNum = "p1";
 String fileName;
 Table table;
+PImage[] nibs = new PImage[3];
 
 void setup() {
+  nibs[0] = loadImage("img/pen.png");
+  nibs[1] = loadImage("img/pencil.png");
+  nibs[2] = loadImage("img/brush.png");
+
   prepareExitHandler();
   table = new Table();
   table.addColumn("id");
+  table.addColumn("value-mode");
   table.addColumn("value-type");
-  table.addColumn("computer-value");
-  table.addColumn("user-value");
+  table.addColumn("value-computer");
+  table.addColumn("value-user");
   table.addColumn("time");
 
   currentActivity = new MenuActivity();
@@ -91,7 +97,7 @@ void serialEvent(Serial p) {
   if (currentActivity instanceof HIFICanvasAvtivity){
     // ((HIFICanvasAvtivity)currentActivity).setForce(readInFloat(readInFloats[0]));
     ((HIFICanvasAvtivity)currentActivity).setForce(inByte1);
-    ((HIFICanvasAvtivity)currentActivity).setMag(h1InByte2);
+    ((HIFICanvasAvtivity)currentActivity).setMag(inByte2);
     ((HIFICanvasAvtivity)currentActivity).setForce1(h1InByte1);
     ((HIFICanvasAvtivity)currentActivity).setMag1(h1InByte2);
     ((HIFICanvasAvtivity)currentActivity).setForce2(h2InByte2);
@@ -284,4 +290,26 @@ double min(double... n) {
         if (n[i] < min)
             min = n[i];
     return min;
+}
+
+
+PImage changeImgColor(PImage img, float _r, float _g, float _b) {
+  loadPixels();
+  img.loadPixels();
+  for (int c, i = img.pixels.length; i != 0;) {
+    c = img.pixels[--i];   // gets pixel whole color
+    float r, g, b;
+    r = red(c);     // r = c >> 020 & 0xFF;
+    g = green(c);   // g = c >> 010 & 0xFF;
+    b = blue(c);    // b = c & 0xFF;
+
+    // if (c != 0)  System.out.println(alpha(c));
+    if (c != 0) {
+      img.pixels[i] = color(_r, _g, _b, alpha(c)); // Set the display pixel to the image pixel
+    }
+  }
+  img.updatePixels();
+  return img;
+
+  // image(pen, mouseX, mouseY, 30, 30);
 }

@@ -111,7 +111,7 @@ public class HIFIColorMatchActivity extends CanvasActivity {
         userValues[matchCount] = (this.rgb[RED]+":"+this.rgb[GREEN]+":"+this.rgb[BLUE]);
       } else if (matchingMode[matchCount] == 1){
         this.paintBrush.setSize((int)map(this.mag1, 1, 700, 105, 1));
-        super.draw(this.paintBrush.getSize(), this.paintSelector.getColor());
+        // super.draw(this.paintBrush.getSize(), this.paintSelector.getColor());
         strokeWeight(105);
         stroke(0);
         strokeWeight(matchingNib[matchCount]);

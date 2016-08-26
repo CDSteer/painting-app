@@ -1,7 +1,5 @@
-
 import java.util.Random;
 public class GUIColorMatchActivity extends CanvasActivity {
-
   HIFIPaintBrush paintBrush;
   HIFIPaintSelector paintSelector;
   Canvas canvas;
@@ -18,14 +16,18 @@ public class GUIColorMatchActivity extends CanvasActivity {
   private int startTime;
   private float[] times = new float[10];
 
+
   private int matchCount = 0;
   private int matchingMode[] = {0, 0, 1, 0, 1, 1, 0, 1, 1, 0};
 
-  private int matchingNib[] = {60, 30, 20, 12, 70, 10, 30, 45, 50, 20};
+  private int matchingNib[] = {0, 2, 1, 2, 1, 0, 0, 1, 2, 0};
+  private int matchingNibSize[] = {60, 30, 20, 12, 70, 10, 30, 45, 50, 20};
 
   private int matchingColorsRGB[] = {2, 1, 3, 2, 1, 1, 3, 1, 3, 2};
   private int matchingColorsDepth[] = {100, 255, 200, 100, 255, 200, 100, 255, 200, 50};
+
   private String[] userValues = new String[9];;
+
 
   private int[] rgb;
   private int[] rgbMatch;
@@ -48,28 +50,31 @@ public class GUIColorMatchActivity extends CanvasActivity {
     this.canvas = new Canvas(500, 140, 300, 300);
     this.drawCanvas();
   }
-
   void drawCanvas(){
     // this.canvas.draw();
   }
-
   public void draw(){
     background(200);
     nextButton.draw();
+    parceInput();
     if (matchCount == 9) {
       background(200);
       text("Tasks complete", width/2, height/2);
       for(int i=0; i < times.length-1; i++){
         print("  "  + times[i]);
         TableRow newRow = table.addRow();
-        newRow.setInt("id", table.getRowCount() - 1);
+        newRow.setInt("id", table.getRowCount()-1);
         if (matchingMode[i] == 0){
-          newRow.setString("value-type", "colour");
+          newRow.setString("value-mode", "paint");
+          newRow.setString("value-type", Integer.toString(matchingColorsRGB[i]));
+          newRow.setString("value-computer", Integer.toString(matchingColorsDepth[i]));
         } else if (matchingMode[i] == 1){
-          newRow.setString("value-type", "nib");
+          newRow.setString("value-mode", "nib");
+          newRow.setString("value-type", Integer.toString(matchingNib[i]));
+          newRow.setString("value-computer", Integer.toString(matchingNibSize[i]));
         }
-        newRow.setString("computer-value", Integer.toString(matchingColorsDepth[i]));
-        newRow.setString("user-value", (userValues[i]));
+
+        newRow.setString("value-user", (userValues[i]));
         newRow.setString("time", String.valueOf(times[i]));
       }
       delay(500);
@@ -112,18 +117,23 @@ public class GUIColorMatchActivity extends CanvasActivity {
         rectMode(CORNER);
         userValues[matchCount] = (this.rgb[RED]+":"+this.rgb[GREEN]+":"+this.rgb[BLUE]);
       } else if (matchingMode[matchCount] == 1){
-        this.paintBrush.setSize((int)map(this.green, 1, 255, 105, 1));
-        super.draw(this.paintBrush.getSize(), this.paintSelector.getColor());
-        strokeWeight(105);
-        stroke(0);
-        strokeWeight(matchingNib[matchCount]);
-        stroke(255);
-        point(width-(width/2)-200, height-(height/2));
-        strokeWeight(this.paintBrush.getSize());
-        stroke(255);
-        point(width-(width/2)+200, height-(height/2));
-        strokeWeight(1);
-        stroke(0);
+        switch (matchingNib[matchCount]) {
+          case 0:
+            this.paintBrush.setSize((int)map(this.blue, 1, 255, 105, 1));
+            image(nibs[matchingNib[matchCount]], 150, 140, matchingNibSize[matchCount], matchingNibSize[matchCount]);
+            image(nibs[matchingNib[matchCount]], 150, 340, this.paintBrush.getSize(), this.paintBrush.getSize());
+          break;
+          case 1:
+            this.paintBrush.setSize((int)map(this.green, 1, 255, 105, 1));
+            image(nibs[matchingNib[matchCount]], 350, 140, matchingNibSize[matchCount], matchingNibSize[matchCount]);
+            image(nibs[matchingNib[matchCount]], 350, 340, this.paintBrush.getSize(), this.paintBrush.getSize());
+          break;
+          case 2:
+            this.paintBrush.setSize((int)map(this.red, 1, 255, 105, 1));
+            image(nibs[matchingNib[matchCount]], 550, 140, matchingNibSize[matchCount], matchingNibSize[matchCount]);
+            image(nibs[matchingNib[matchCount]], 550, 340, this.paintBrush.getSize(), this.paintBrush.getSize());
+          break;
+        }
         userValues[matchCount] = Integer.toString(this.paintBrush.getSize());
       }
     }
@@ -132,7 +142,6 @@ public class GUIColorMatchActivity extends CanvasActivity {
         match();
       }
     }
-    parceInput();
     if (this.nextButton.inBounds(mouseX, mouseY)){
       this.hoverbutton = true;
       this.nextButton.hightlight();
@@ -154,11 +163,15 @@ public class GUIColorMatchActivity extends CanvasActivity {
     matchCount++;
     startTime = millis();
     match = false;
+    this.red = 0;
+    this.green = 0;
+    this.blue = 0;
   }
 
   void setMatch(){
     match = true;
   }
+
   void paint(int size, color c) {
     if (this.isDragging() && amoutOfPaint > 0 && canvas.inCanvas(this.paintBrush.getSize())){
      stroke(c);
@@ -173,7 +186,6 @@ public class GUIColorMatchActivity extends CanvasActivity {
   public void setInputValue(String input){
     this.inputValue = input;
   }
-
 
   public int randInt(int min, int max) {
     Random rand = new Random();

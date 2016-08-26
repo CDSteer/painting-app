@@ -36,11 +36,30 @@
       rect(width-200, 100, 100, 100);
       this.paintBrush.setColor(color(rgb[RED],rgb[GREEN],rgb[BLUE]));
     }
+    println(mag+", "+mag1+", "+mag2);
     if (level == 2){
-      this.paintBrush.setSize((int)map(this.mag, 1, 700, 72, 1));
+      if (mag > mag1 && mag > mag2){
+        println(0);
+        this.paintBrush.setSize((int)map(this.mag, 1, 700, 72, 1));
+        super.draw(this.paintBrush.getSize(), this.paintBrush.getColor(), 0);
+        this.paintBrush.drawSlider(this.paintSelector.getColor(), 0);
+      }
+      if (mag1 > mag && mag1 > mag2){
+        println(01);
+        this.paintBrush.setSize((int)map(this.mag1, 1, 700, 72, 1));
+        super.draw(this.paintBrush.getSize(), this.paintBrush.getColor(), 1);
+        this.paintBrush.drawSlider(this.paintSelector.getColor(), 1);
+      }
+      if (mag2 > mag && mag2 > mag1){
+        println(02);
+        this.paintBrush.setSize((int)map(this.mag2, 1, 700, 72, 1));
+        super.draw(this.paintBrush.getSize(), this.paintBrush.getColor(), 2);
+        this.paintBrush.drawSlider(this.paintSelector.getColor(), 2);
+      }
     }
-    super.draw(this.paintBrush.getSize(), this.paintBrush.getColor());
-    this.paintBrush.drawSlider(this.paintSelector.getColor());
+
+
+
     // this.paintSelector.drawPaintSelector();
     fill(0,0,0);
 

@@ -20,18 +20,13 @@ public abstract class CanvasActivity extends PaintingAppActivity{
     this.drawCanvas();
   }
 
-  void draw(int size, color c){
-    this.paint(size, c);
+  void draw(int size, color c, int nib){
+    this.paint(size, c, nib);
   }
 
-  void paint(int size, color c) {
+  void paint(int size, color c, int nib) {
     if (super.dragging && amoutOfPaint > 0 && this.inCanvas()){
-     stroke(c);
-     strokeWeight(size);
-     line(pmouseX, pmouseY, mouseX, mouseY);
-     amoutOfPaint--;
-     strokeWeight(1);
-     stroke(0);
+     image(changeImgColor(nibs[nib], red(c), green(c), blue(c)), mouseX, mouseY, size, size);
     }
   }
 
