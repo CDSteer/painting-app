@@ -100,7 +100,7 @@ void serialEvent(Serial p) {
     ((HIFICanvasAvtivity)currentActivity).setMag(inByte2);
     ((HIFICanvasAvtivity)currentActivity).setForce1(h1InByte1);
     ((HIFICanvasAvtivity)currentActivity).setMag1(h1InByte2);
-    ((HIFICanvasAvtivity)currentActivity).setForce2(h2InByte2);
+    ((HIFICanvasAvtivity)currentActivity).setForce2(h2InByte1);
     ((HIFICanvasAvtivity)currentActivity).setMag2(h2InByte2);
     // ((HIFICanvasAvtivity)currentActivity).setAngle(-readInFloat(readInFloats[1]));
     // ((HIFICanvasAvtivity)currentActivity).setMag(readInFloat(readInFloats[2])*100);
@@ -281,6 +281,18 @@ double max(double... n) {
         if (n[i] > max)
             max = n[i];
     return max;
+}
+int maxIndex(double... n) {
+    int i = 0;
+    double max = n[i];
+    int maxIndex = 0;
+    for (i = 0; i < n.length; i++){
+      if (n[i] > max){
+        max = n[i];
+        maxIndex = i;
+      }
+    }
+    return maxIndex;
 }
 
 double min(double... n) {

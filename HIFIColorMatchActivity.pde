@@ -11,10 +11,13 @@ public class HIFIColorMatchActivity extends CanvasActivity {
 
   int matchCount = 0;
   private int matchingMode[] = {0, 1, 1, 0, 1, 1, 0, 1, 1, 0};
-  private int matchingNib[] = {60, 30, 20, 12, 70, 10, 30, 45, 50, 20};
+
+  private int matchingNib[] = {0, 2, 1, 2, 1, 0, 0, 1, 2, 0};
+  private int matchingNibSize[] = {60, 30, 20, 12, 70, 10, 30, 45, 50, 20};
+
   private int matchingColorsRGB[] = {2, 1, 3, 2, 1, 1, 3, 1, 3, 2};
   private int matchingColorsDepth[] = {100, 255, 200, 100, 255, 200, 100, 255, 200, 50};
-  private String[] userValues = new String[9];;
+  private String[] userValues = new String[9];
 
   private String interfaceType = "defomable";
   private boolean match = false;
@@ -61,12 +64,16 @@ public class HIFIColorMatchActivity extends CanvasActivity {
         TableRow newRow = table.addRow();
         newRow.setInt("id", table.getRowCount() - 1);
         if (matchingMode[i] == 0){
-          newRow.setString("value-type", "colour");
+          newRow.setString("value-mode", "paint");
+          newRow.setString("value-type", Integer.toString(matchingColorsRGB[i]));
+          newRow.setString("value-computer", Integer.toString(matchingColorsDepth[i]));
         } else if (matchingMode[i] == 1){
-          newRow.setString("value-type", "nib");
+          newRow.setString("value-mode", "nib");
+          newRow.setString("value-type", Integer.toString(matchingNib[i]));
+          newRow.setString("value-computer", Integer.toString(matchingNibSize[i]));
         }
-        newRow.setString("computer-value", Integer.toString(matchingColorsDepth[i]));
-        newRow.setString("user-value", (userValues[i]));
+
+        newRow.setString("value-user", (userValues[i]));
         newRow.setString("time", String.valueOf(times[i]));
       }
       delay(500);
@@ -109,19 +116,25 @@ public class HIFIColorMatchActivity extends CanvasActivity {
           trigger = true;
         }
         userValues[matchCount] = (this.rgb[RED]+":"+this.rgb[GREEN]+":"+this.rgb[BLUE]);
-      } else if (matchingMode[matchCount] == 1){
-        this.paintBrush.setSize((int)map(this.mag1, 1, 700, 105, 1));
-        // super.draw(this.paintBrush.getSize(), this.paintSelector.getColor());
-        strokeWeight(105);
-        stroke(0);
-        strokeWeight(matchingNib[matchCount]);
-        stroke(255);
-        point(width-(width/2)-200, height-(height/2));
-        strokeWeight(this.paintBrush.getSize());
-        stroke(255);
-        point(width-(width/2)+200, height-(height/2));
-        strokeWeight(1);
-        stroke(0);
+      }  else if (matchingMode[matchCount] == 1){
+        println(mag+", "+ mag1 +", "+mag2);
+        switch (matchingNib[matchCount]) {
+          case 0:
+            this.paintBrush.setSize((int)map(this.mag, 1, 500, 105, 1));
+            image(nibs[matchingNib[matchCount]], 150, 140, matchingNibSize[matchCount], matchingNibSize[matchCount]);
+            image(nibs[matchingNib[matchCount]], 150, 340, this.paintBrush.getSize(), this.paintBrush.getSize());
+          break;
+          case 1:
+            this.paintBrush.setSize((int)map(this.mag1, 1, 500, 105, 1));
+            image(nibs[matchingNib[matchCount]], 350, 140, matchingNibSize[matchCount], matchingNibSize[matchCount]);
+            image(nibs[matchingNib[matchCount]], 350, 340, this.paintBrush.getSize(), this.paintBrush.getSize());
+          break;
+          case 2:
+            this.paintBrush.setSize((int)map(this.mag2, 1, 500, 105, 1));
+            image(nibs[matchingNib[matchCount]], 550, 140, matchingNibSize[matchCount], matchingNibSize[matchCount]);
+            image(nibs[matchingNib[matchCount]], 550, 340, this.paintBrush.getSize(), this.paintBrush.getSize());
+          break;
+        }
         if (!trigger) {
           myPort.write('h');
           trigger = true;

@@ -5,7 +5,9 @@
   private float force, angle, mag, Rv;
   private float force1, mag1, force2, mag2;
 
+  private float[] squeezeValues;
   private int[] rgb;
+  private int squeezeSensel;
 
   private Button nibMode;
   private Button paintMode;
@@ -21,6 +23,7 @@
     rect(width-200, 100, 100, 100);
     nibMode = new Button(width-200, 250, 100, 50, color(255), "Paint");
     paintMode = new Button(width-200, height-220, 100, 50, color(255), "Nib");
+    squeezeValues = new float[3];
   }
 
   void draw(){
@@ -32,32 +35,21 @@
     // this.paintSelector.sendBlue(this.rgb[BLUE]);
     // this.paintSelector.update();
     if (level == 0){
+      println(force+", "+ force1 +", "+force2);
       fill(rgb[RED],rgb[GREEN],rgb[BLUE]);
       rect(width-200, 100, 100, 100);
       this.paintBrush.setColor(color(rgb[RED],rgb[GREEN],rgb[BLUE]));
     }
-    println(mag+", "+mag1+", "+mag2);
+
     if (level == 2){
-      if (mag > mag1 && mag > mag2){
-        println(0);
-        this.paintBrush.setSize((int)map(this.mag, 1, 700, 72, 1));
-        super.draw(this.paintBrush.getSize(), this.paintBrush.getColor(), 0);
-        this.paintBrush.drawSlider(this.paintSelector.getColor(), 0);
-      }
-      if (mag1 > mag && mag1 > mag2){
-        println(01);
-        this.paintBrush.setSize((int)map(this.mag1, 1, 700, 72, 1));
-        super.draw(this.paintBrush.getSize(), this.paintBrush.getColor(), 1);
-        this.paintBrush.drawSlider(this.paintSelector.getColor(), 1);
-      }
-      if (mag2 > mag && mag2 > mag1){
-        println(02);
-        this.paintBrush.setSize((int)map(this.mag2, 1, 700, 72, 1));
-        super.draw(this.paintBrush.getSize(), this.paintBrush.getColor(), 2);
-        this.paintBrush.drawSlider(this.paintSelector.getColor(), 2);
+      println(squeezeValues[0]+", "+ squeezeValues[1] +", "+squeezeValues[2]);
+      squeezeSensel = maxIndex(squeezeValues[0], squeezeValues[1], squeezeValues[2]);
+      if (max(squeezeValues[0], squeezeValues[1], squeezeValues[2]) > 20){
+        this.paintBrush.setSize((int)map(this.squeezeValues[squeezeSensel], 20, 500, 72, 1));
       }
     }
-
+    this.paintBrush.drawSlider(this.paintSelector.getColor(), squeezeSensel);
+    super.draw(this.paintBrush.getSize(), this.paintBrush.getColor(), squeezeSensel);
 
 
     // this.paintSelector.drawPaintSelector();
@@ -115,20 +107,20 @@
     this.force = force;
   }
   public void setMag(float mag){
-    this.mag = mag;
+    this.squeezeValues[0] = mag;
   }
 
   public void setForce1(float force){
     this.force1 = force;
   }
   public void setMag1(float mag){
-    this.mag1 = mag;
+    this.squeezeValues[1] = mag;
   }
   public void setForce2(float force){
     this.force2 = force;
   }
   public void setMag2(float mag){
-    this.mag2 = mag;
+    this.squeezeValues[2] = mag;
   }
 
   public void setAngle(float angle){
