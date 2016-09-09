@@ -179,6 +179,7 @@ void mousePressed(){
   if (currentActivity instanceof HIFICanvasAvtivity){
     ((HIFICanvasAvtivity)currentActivity).click();
   }
+
 }
 
 void keyPressed() {
