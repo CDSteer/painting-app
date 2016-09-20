@@ -7,27 +7,25 @@ public class GUIColorMatchActivity extends CanvasActivity {
   private int level, randRed, randBlue, randGreen;
   private int redMatch, blueMatch, greenMatch;
   private String inputValue;
-
   private float force, angle, mag, Rv;
   private float force1, mag1, force2, mag2;
-
   private String interfaceType = "gui";
-
   private int startTime;
-  private float[] times = new float[10];
-
-
+  private float[] times;
   private int matchCount = 0;
-  private int matchingMode[] = {0, 0, 1, 0, 1, 1, 0, 1, 1, 0};
+  private int matchingMode[] = new int[6];
+  private int matchingNib[] = new int[6];
+  private int matchingNibSize[] = new int[6];
+  private int matchingColorsRGB[] = new int[6];
+  private int matchingColorsDepth[] = new int[6];
+  private String[] userValues;
+  private TableRow newRowSesh = tableSesh.addRow();
+  private int topForce[] = new int[3];
+  private int activeSensol;
+  private boolean grabStartTimeSet = false;
+  private int grabStartTime ;
 
-  private int matchingNib[] = {0, 2, 1, 2, 1, 0, 0, 1, 2, 0};
-  private int matchingNibSize[] = {60, 30, 20, 12, 70, 10, 30, 45, 50, 20};
-
-  private int matchingColorsRGB[] = {2, 1, 3, 2, 1, 1, 3, 1, 3, 2};
-  private int matchingColorsDepth[] = {100, 255, 200, 100, 255, 200, 100, 255, 200, 50};
-
-  private String[] userValues = new String[9];;
-
+  private String activecolour;
 
   private int[] rgb;
   private int[] rgbMatch;
@@ -42,7 +40,46 @@ public class GUIColorMatchActivity extends CanvasActivity {
     randRed = randInt(50,250);
     randBlue = randInt(50,250);
     randGreen = randInt(50,250);
-    nextButton = new Button(width/2, height-200, 100, 50, color(255), "Next");
+    nextButton = new Button((width/2)-25, height-200, 100, 50, color(255), "Next");
+    startTime = millis();
+    for(int i=0; i < 6; i++){
+      matchingNibSize[i] = randInt(10,100);
+      matchingColorsDepth[i] = randInt(10,255);
+    }
+    switch (tabAtempt){
+      case 1:
+        matchingMode = new int[]        {1,	1, 0, 1, 0, 0};
+        matchingNib = new int[]         {0,	1, 0, 2, 0, 0};
+        matchingColorsRGB = new int[]   {0,	0, 3,	0, 2, 1};
+      break;
+      case 2:
+        matchingMode = new int[]        {1,	1, 1,	0, 0, 0};
+        matchingNib = new int[]         {1, 2, 1, 0, 0, 0};
+        matchingColorsRGB = new int[]   {0, 0, 0, 1, 3,	2};
+      break;
+      case 3:
+        matchingMode = new int[]        {1,	0, 1, 0, 1, 0};
+        matchingNib = new int[]         {2, 0, 1, 0, 0, 0};
+        matchingColorsRGB = new int[]   {0, 1, 0, 2, 0, 3};
+      break;
+      case 4:
+        matchingMode = new int[]        {0,	0, 1, 0, 1, 1};
+        matchingNib = new int[]         {0,	0, 2,	0, 1, 0};
+        matchingColorsRGB = new int[]   {1,	2, 0, 3, 0, 0};
+      break;
+      case 5:
+        matchingMode = new int[]        {0, 0, 0, 1, 1, 1};
+        matchingNib = new int[]         {0, 0, 0, 0, 2, 1};
+        matchingColorsRGB = new int[]   {2, 3, 1, 0, 0, 0};
+      break;
+      case 6:
+        matchingMode = new int[]        {0, 1, 0, 1, 0, 1};
+        matchingNib = new int[]         {0, 1, 0, 0, 0, 2};
+        matchingColorsRGB = new int[]   {3, 0, 2, 0, 1, 0};
+      break;
+    }
+    userValues = new String[6];
+    times = new float[6];
     startTime = millis();
   }
 
@@ -57,13 +94,13 @@ public class GUIColorMatchActivity extends CanvasActivity {
     background(200);
     nextButton.draw();
     parceInput();
-    if (matchCount == 9) {
+    if (matchCount == 6) {
       background(200);
       text("Tasks complete", width/2, height/2);
-      for(int i=0; i < times.length-1; i++){
-        print("  "  + times[i]);
-        TableRow newRow = table.addRow();
-        newRow.setInt("id", table.getRowCount()-1);
+      for(int i=0; i < times.length; i++){
+        //print("  "  + times[i]);
+        TableRow newRow = tableResults.addRow();
+        newRow.setInt("id", tableResults.getRowCount()-1);
         if (matchingMode[i] == 0){
           newRow.setString("value-mode", "paint");
           newRow.setString("value-type", Integer.toString(matchingColorsRGB[i]));
@@ -78,12 +115,18 @@ public class GUIColorMatchActivity extends CanvasActivity {
         newRow.setString("time", String.valueOf(times[i]));
       }
       delay(500);
-      fileName = ("data/" + pNum + "-" + interfaceType + ".csv");
-      saveTable(table, fileName);
+      fileName = ("data/" + pNum + "-" + interfaceType + "-" + "results" + "-" + String.valueOf(tabAtempt) + ".csv");
+      saveTable(tableResults, fileName);
+      fileName = ("data/" + pNum + "-" + interfaceType + "-" + "sesh" + "-" + String.valueOf(tabAtempt) + ".csv");
+      saveTable(tableSesh, fileName);
       this.setState(0);
+      tabAtempt++;
       currentActivity = new MenuActivity();
     } else {
-      rgb = ryb2rgb(red,green,blue);
+      topForce[0] = red;
+      topForce[1] = green;
+      topForce[2] = blue;
+      rgb = ryb2rgb(red, green, blue);
       this.paintSelector.sendBlue(this.rgb[RED]);
       this.paintSelector.sendGreen(this.rgb[GREEN]);
       this.paintSelector.sendBlue(this.rgb[BLUE]);
@@ -116,25 +159,48 @@ public class GUIColorMatchActivity extends CanvasActivity {
         }
         rectMode(CORNER);
         userValues[matchCount] = (this.rgb[RED]+":"+this.rgb[GREEN]+":"+this.rgb[BLUE]);
+        println(matchCount);
+        if (red > 0 || green > 0 || blue > 0){
+          activecolour = (this.rgb[RED]+":"+this.rgb[GREEN]+":"+this.rgb[BLUE]);
+          activeSensol = maxIndex(red,green,blue);
+          newRowSesh = tableSesh.addRow();
+          newRowSesh.setInt("id", tableSesh.getRowCount()-1);
+          newRowSesh.setInt("sensol-num", activeSensol);
+          newRowSesh.setString("value", activecolour);
+          newRowSesh.setInt("match-num", matchCount);
+          int elapsed = millis() - startTime;
+          newRowSesh.setString("startTime", String.valueOf(float(elapsed)/1000));
+        }
       } else if (matchingMode[matchCount] == 1){
         switch (matchingNib[matchCount]) {
           case 0:
-            this.paintBrush.setSize((int)map(this.blue, 1, 255, 105, 1));
+            this.paintBrush.setSize((int)map(this.blue, 1, 255, 100, 1));
             image(nibs[matchingNib[matchCount]], 150, 140, matchingNibSize[matchCount], matchingNibSize[matchCount]);
             image(nibs[matchingNib[matchCount]], 150, 340, this.paintBrush.getSize(), this.paintBrush.getSize());
           break;
           case 1:
-            this.paintBrush.setSize((int)map(this.green, 1, 255, 105, 1));
+            this.paintBrush.setSize((int)map(this.green, 1, 255, 100, 1));
             image(nibs[matchingNib[matchCount]], 350, 140, matchingNibSize[matchCount], matchingNibSize[matchCount]);
             image(nibs[matchingNib[matchCount]], 350, 340, this.paintBrush.getSize(), this.paintBrush.getSize());
           break;
           case 2:
-            this.paintBrush.setSize((int)map(this.red, 1, 255, 105, 1));
+            this.paintBrush.setSize((int)map(this.red, 1, 255, 100, 1));
             image(nibs[matchingNib[matchCount]], 550, 140, matchingNibSize[matchCount], matchingNibSize[matchCount]);
             image(nibs[matchingNib[matchCount]], 550, 340, this.paintBrush.getSize(), this.paintBrush.getSize());
           break;
         }
         userValues[matchCount] = Integer.toString(this.paintBrush.getSize());
+        if (red > 0 || green > 0 || blue > 0){
+          activecolour = Integer.toString(this.paintBrush.getSize());
+          activeSensol = maxIndex(red,green,blue);
+          newRowSesh = tableSesh.addRow();
+          newRowSesh.setInt("id", tableSesh.getRowCount()-1);
+          newRowSesh.setInt("sensol-num", activeSensol);
+          newRowSesh.setString("value", activecolour);
+          newRowSesh.setInt("match-num", matchCount);
+          int elapsed = millis() - startTime;
+          newRowSesh.setString("startTime", String.valueOf(float(elapsed)/1000));
+        }
       }
     }
     if (match == true) {
@@ -159,7 +225,7 @@ public class GUIColorMatchActivity extends CanvasActivity {
   void match(){
     int elapsed = millis() - startTime;
     times[matchCount] = float(elapsed) / 1000;
-    println(times[matchCount]);
+    //println(times[matchCount]);
     matchCount++;
     startTime = millis();
     match = false;
@@ -194,41 +260,34 @@ public class GUIColorMatchActivity extends CanvasActivity {
   }
 
   public void colorpick(){
-      this.paintSelector.sendRed(this.red);
-      fill(this.paintSelector.getRed(),0,0);
-      rect(500, 140, 100, 100);
-      if (randRed == this.paintSelector.getRed()){
-        redMatch = 1;
-      }
-      this.paintSelector.sendGreen(this.green);
-      fill(0,this.paintSelector.getGreen(),0);
-      rect(500, 340, 100, 100);
-      if (randGreen == this.paintSelector.getGreen()){
-        greenMatch = 1;
-      }
-      this.paintSelector.sendBlue(this.blue);
-      fill(0,0,this.paintSelector.getBlue());
-      rect(500, 540, 100, 100);
-      if (randBlue == this.paintSelector.getBlue()){
-        blueMatch = 1;
-      }
+    this.paintSelector.sendRed(this.red);
+    fill(this.paintSelector.getRed(),0,0);
+    rect(500, 140, 100, 100);
+    if (randRed == this.paintSelector.getRed()){
+      redMatch = 1;
+    }
+    this.paintSelector.sendGreen(this.green);
+    fill(0,this.paintSelector.getGreen(),0);
+    rect(500, 340, 100, 100);
+    if (randGreen == this.paintSelector.getGreen()){
+      greenMatch = 1;
+    }
+    this.paintSelector.sendBlue(this.blue);
+    fill(0,0,this.paintSelector.getBlue());
+    rect(500, 540, 100, 100);
+    if (randBlue == this.paintSelector.getBlue()){
+      blueMatch = 1;
+    }
   }
+
   private void parceInput(){
-    println(inputValue);
+    //println(inputValue);
     if (inputValue != null) {
       String[] qtmp = splitTokens(inputValue, ":");
-      if (qtmp.length == 2){
-        String type = trim(qtmp[0]);
-        String value = trim(qtmp[1]);
-        if (type.equalsIgnoreCase("RED")){
-          this.red = int(value);
-        } else if (type.equalsIgnoreCase("GREEN")){
-          this.green = int(value);
-        } else if (type.equalsIgnoreCase("BLUE")){
-          this.blue = int(value);
-        } else if (type.equalsIgnoreCase("nib")){
-          this.nib = int(value);
-        }
+      if (qtmp.length == 6){
+         this.red = int(qtmp[1]);
+         this.green = int(qtmp[3]);
+         this.blue = int(qtmp[5]);
       }
     }
   }

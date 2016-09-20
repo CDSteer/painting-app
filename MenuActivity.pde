@@ -1,5 +1,5 @@
 public class MenuActivity extends PaintingAppActivity{
-  private final int BUTTONCOUNT = 5;
+  private final int BUTTONCOUNT = 6;
   private Button[] buttons =  new Button[BUTTONCOUNT];
   private int hoverbutton;
 
@@ -7,10 +7,11 @@ public class MenuActivity extends PaintingAppActivity{
     super();
     this.hoverbutton = 0;
     buttons[0] = new Button(100, 100, 250, 100, color(255), "GUI-Nib-Match");
-    buttons[1] = new Button(100, 200, 250, 100, color(255), "Deformable-Drawing");
+    buttons[1] = new Button(100, 100, 250, 100, color(255), "Deformable-Drawing");
     buttons[2] = new Button(100, 400, 250, 100, color(255), "Deformable-Nib-Match");
-    buttons[3] = new Button(400, 100, 250, 100, color(255), "GUI-Colour-Match");
-    buttons[4] = new Button(400, 250, 250, 100, color(255), "Deformable-Colour-Match");
+    buttons[3] = new Button(400, 100, 250, 100, color(255), "Tablet-Match");
+    buttons[4] = new Button(400, 250, 250, 100, color(255), "Deformable-Match");
+    buttons[5] = new Button(100, 250, 250, 100, color(255), "Tablet-Drawing");
   }
 
   void draw(){
@@ -18,6 +19,7 @@ public class MenuActivity extends PaintingAppActivity{
     this.buttons[1].draw();
     this.buttons[3].draw();
     this.buttons[4].draw();
+    this.buttons[5].draw();
     this.update();
     this.mousePressed();
   }
@@ -54,6 +56,9 @@ public class MenuActivity extends PaintingAppActivity{
           break;
         case 5:
           this.setState(5);
+          break;
+        case 6:
+          this.setState(6);
           break;
         default:
           break;

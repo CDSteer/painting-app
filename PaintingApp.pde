@@ -14,8 +14,11 @@ SocketServer mSocketServer;
 String[] qtmp;
 String[] qtmp2;
 String pNum = "p1";
+int tabAtempt = 1;
+int defomAtempt = 1;
 String fileName;
-Table table;
+Table tableResults;
+Table tableSesh;
 PImage[] nibs = new PImage[3];
 
 void setup() {
@@ -24,13 +27,21 @@ void setup() {
   nibs[2] = loadImage("img/brush.png");
 
   prepareExitHandler();
-  table = new Table();
-  table.addColumn("id");
-  table.addColumn("value-mode");
-  table.addColumn("value-type");
-  table.addColumn("value-computer");
-  table.addColumn("value-user");
-  table.addColumn("time");
+
+  tableResults = new Table();
+  tableResults.addColumn("id");
+  tableResults.addColumn("value-mode");
+  tableResults.addColumn("value-type");
+  tableResults.addColumn("value-computer");
+  tableResults.addColumn("value-user");
+  tableResults.addColumn("time");
+
+  tableSesh = new Table();
+  tableSesh.addColumn("id");
+  tableSesh.addColumn("sensol-num");
+  tableSesh.addColumn("value");
+  tableSesh.addColumn("match-num");
+
 
   currentActivity = new MenuActivity();
   size(1250, 750);
@@ -50,7 +61,7 @@ void draw() {
   if (currentActivity.getState() == 0){
     currentActivity.draw();
   } else if (currentActivity.getState() == 1) {
-    currentActivity = new GUINibMatchActivity();
+    // currentActivity = new GUINibMatchActivity();
     currentActivity.draw();
     if (mSocketServer == null){
       mSocketServer = new SocketServer();
@@ -59,7 +70,7 @@ void draw() {
     currentActivity = new HIFICanvasAvtivity();
     currentActivity.draw();
   } else if (currentActivity.getState() == 3) {
-    currentActivity = new HIFINibMatchActivity();
+    // currentActivity = new HIFINibMatchActivity();
     currentActivity.draw();
   } else if (currentActivity.getState() == 4) {
     currentActivity = new GUIColorMatchActivity();
@@ -70,6 +81,12 @@ void draw() {
   } else if (currentActivity.getState() == 5) {
     currentActivity = new HIFIColorMatchActivity();
     currentActivity.draw();
+  } else if (currentActivity.getState() == 6) {
+    currentActivity = new GUICanvasAvtivity();
+    currentActivity.draw();
+    if (mSocketServer == null){
+      mSocketServer = new SocketServer();
+    }
   }
 
   if (currentActivity instanceof GUIColorMatchActivity){
@@ -77,18 +94,19 @@ void draw() {
     guiInput = mSocketServer.getValue();
     ((GUIColorMatchActivity)currentActivity).setInputValue(guiInput);
   }
-  if (currentActivity instanceof GUINibMatchActivity){
+  if (currentActivity instanceof GUICanvasAvtivity){
     // println(mSocketServer.getValue());
     guiInput = mSocketServer.getValue();
-    ((GUINibMatchActivity)currentActivity).setInputValue(guiInput);
+    ((GUICanvasAvtivity)currentActivity).setInputValue(guiInput);
   }
 }
+
 private void prepareExitHandler () {
-  Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
-  public void run() {
-    System.out.println("SHUTDOWN HOOK");
-  }
-  }));
+  // Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+  // public void run() {
+  //   System.out.println("SHUTDOWN HOOK");
+  // }
+  // }));
 }
 
 void serialEvent(Serial p) {
@@ -109,16 +127,9 @@ void serialEvent(Serial p) {
     ((HIFIColorMatchActivity)currentActivity).setMag(inByte2);
     ((HIFIColorMatchActivity)currentActivity).setForce1(h1InByte1);
     ((HIFIColorMatchActivity)currentActivity).setMag1(h1InByte2);
-    ((HIFIColorMatchActivity)currentActivity).setForce2(0);
+    ((HIFIColorMatchActivity)currentActivity).setForce2(h2InByte1);
     ((HIFIColorMatchActivity)currentActivity).setMag2(h2InByte2);
     // println(inByte + ", " + h1InByte1 + ", " + h2InByte2);
-  } else if (currentActivity instanceof HIFINibMatchActivity){
-    ((HIFINibMatchActivity)currentActivity).setForce(inByte1);
-    ((HIFINibMatchActivity)currentActivity).setMag(inByte2);
-    ((HIFINibMatchActivity)currentActivity).setForce1(h1InByte1);
-    ((HIFINibMatchActivity)currentActivity).setMag1(h1InByte2);
-    ((HIFINibMatchActivity)currentActivity).setForce2(h2InByte1);
-    ((HIFINibMatchActivity)currentActivity).setMag2(h2InByte2);
   }
 }
 
@@ -179,11 +190,12 @@ void mousePressed(){
   if (currentActivity instanceof HIFICanvasAvtivity){
     ((HIFICanvasAvtivity)currentActivity).click();
   }
-
+  if (currentActivity instanceof GUICanvasAvtivity){
+    ((GUICanvasAvtivity)currentActivity).click();
+  }
 }
 
 void keyPressed() {
-
   if (key == CODED) {
     if (currentActivity instanceof HIFICanvasAvtivity || currentActivity instanceof HIFIColorMatchActivity){
       if (keyCode == UP) {

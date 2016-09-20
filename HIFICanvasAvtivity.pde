@@ -61,15 +61,14 @@
     this.paintBrush.drawSlider(color(rgb[RED],rgb[GREEN],rgb[BLUE]), squeezeSensel);
     fill(0);
     buttonListen();
-    super.draw(this.paintBrush.getSize(), this.paintBrush.getColor(), squeezeSensel);
   }
 
   void nibChange(){
+    super.draw(this.paintBrush.getSize(), this.paintBrush.getColor(), squeezeSensel);
     println("Force: "+squeezeValues[0]+", "+ squeezeValues[1] +", "+squeezeValues[2]);
     println("nibSize: "+(int)map(this.squeezeValues[0], 15, 500, 72, 1)+", "+ (int)map(this.squeezeValues[1], 15, 500, 72, 1) +", "+(int)map(this.squeezeValues[2], 15, 500, 72, 1));
     squeezeSensel = maxIndex(squeezeValues[0], squeezeValues[1], squeezeValues[2]);
     mIndex = maxIndex(squeezeValues[0], squeezeValues[1], squeezeValues[2]);
-
     switch(mIndex){
       case 0:
         this.paintBrush.setSize((int)map(this.squeezeValues[squeezeSensel], 1, 500, 72, 1));
@@ -81,7 +80,6 @@
         this.paintBrush.setSize((int)map(this.squeezeValues[squeezeSensel], 1, 700, 72, 1));
         break;
     }
-
     // if (max(squeezeValues[0], squeezeValues[1], squeezeValues[2]) > 1){
     //   this.paintBrush.setSize((int)map(this.squeezeValues[squeezeSensel], 1, 500, 72, 1));
     // }
@@ -89,6 +87,7 @@
 
 
   void colourChange(){
+    super.draw(this.paintBrush.getSize(), this.paintBrush.getColor(), squeezeSensel);
     if (this.force > 15) {
       redIn = map(this.force, 15, 600, 0, 255);
     } else {
