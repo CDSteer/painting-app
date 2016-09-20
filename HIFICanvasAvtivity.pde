@@ -15,7 +15,8 @@
   private int[] red;
   private int[] yellow;
   private int[] blue;
-  int mIndex;
+  private int mIndex;
+  private TableRow newRowDrawing;
 
   private Button nibMode;
   private Button paintMode;
@@ -23,6 +24,8 @@
   private boolean hoverNibMode = false;
   private boolean hoverPaintMode = false;
   private boolean hoverbackButton = false;
+
+  private String activecolour;
 
   public HIFICanvasAvtivity(){
     this.angle = 0;
@@ -80,6 +83,11 @@
         this.paintBrush.setSize((int)map(this.squeezeValues[squeezeSensel], 1, 700, 72, 1));
         break;
     }
+    activecolour = (squeezeSensel+":"+this.paintBrush.getSize());
+    newRowDrawing = tableDrawing.addRow();
+    newRowDrawing.setInt("id", tableDrawing.getRowCount()-1);
+    newRowDrawing.setString("value-mode", "nib");
+    newRowDrawing.setString("value", activecolour);
     // if (max(squeezeValues[0], squeezeValues[1], squeezeValues[2]) > 1){
     //   this.paintBrush.setSize((int)map(this.squeezeValues[squeezeSensel], 1, 500, 72, 1));
     // }
@@ -122,6 +130,11 @@
     fill(rgb[RED],rgb[GREEN],rgb[BLUE]);
     rect(width-200, 160, 150, 100);
     this.paintBrush.setColor(color(rgb[RED],rgb[GREEN],rgb[BLUE]));
+      activecolour = (this.rgb[RED]+":"+this.rgb[GREEN]+":"+this.rgb[BLUE]);
+      newRowDrawing = tableDrawing.addRow();
+      newRowDrawing.setInt("id", tableDrawing.getRowCount()-1);
+      newRowDrawing.setString("value-mode", "paint");
+      newRowDrawing.setString("value", activecolour);
   }
 
   void click(){
@@ -138,8 +151,7 @@
       background(200);
     }
   }
-
-
+  
   void drawDirctionViz(){
     ellipseMode(CENTER);
     fill(255);
@@ -163,6 +175,8 @@
     this.setLevel(1);
     myPort.write('m');
     this.setState(0);
+    fileName = ("data/" + pNum + "-" + "deform" + "-" + "drawing" + ".csv");
+    saveTable(tableDrawing, fileName);
     currentActivity = new MenuActivity();
   }
 

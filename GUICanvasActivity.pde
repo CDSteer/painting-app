@@ -13,11 +13,13 @@ public class GUICanvasAvtivity extends CanvasActivity {
   private int[] pushValues;
   private int[] rgb;
   private int squeezeSensel;
+  private TableRow newRowDrawing;
 
   private int[] red;
   private int[] yellow;
   private int[] blue;
   int mIndex;
+  private String activecolour;
 
   private Button nibMode;
   private Button paintMode;
@@ -90,6 +92,11 @@ public class GUICanvasAvtivity extends CanvasActivity {
          break;
      }
    }
+   activecolour = (squeezeSensel+":"+this.paintBrush.getSize());
+   newRowDrawing = tableDrawing.addRow();
+   newRowDrawing.setInt("id", tableDrawing.getRowCount()-1);
+   newRowDrawing.setString("value-mode", "nib");
+   newRowDrawing.setString("value", activecolour);
  }
  void colourChange(){
     super.draw(this.paintBrush.getSize(), this.paintBrush.getColor(), squeezeSensel);
@@ -115,7 +122,12 @@ public class GUICanvasAvtivity extends CanvasActivity {
     fill(rgb[RED],rgb[GREEN],rgb[BLUE]);
     rect(width-200, 160, 150, 100);
     this.paintBrush.setColor(color(rgb[RED],rgb[GREEN],rgb[BLUE]));
+    activecolour = (this.rgb[RED]+":"+this.rgb[GREEN]+":"+this.rgb[BLUE]);
 
+    newRowDrawing = tableDrawing.addRow();
+    newRowDrawing.setInt("id", tableDrawing.getRowCount()-1);
+    newRowDrawing.setString("value-mode", "paint");
+    newRowDrawing.setString("value", activecolour);
  }
 
  void click(){
@@ -135,6 +147,9 @@ public class GUICanvasAvtivity extends CanvasActivity {
 
  public void back(){
    this.setState(0);
+   fileName = ("data/" + pNum + "-" + "tab" + "-" + "drawing" + ".csv");
+   saveTable(tableDrawing, fileName);
+   delay(500);
    currentActivity = new MenuActivity();
  }
 

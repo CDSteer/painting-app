@@ -19,6 +19,8 @@ int defomAtempt = 1;
 String fileName;
 Table tableResults;
 Table tableSesh;
+Table tableDrawing;
+
 PImage[] nibs = new PImage[3];
 
 void setup() {
@@ -41,6 +43,11 @@ void setup() {
   tableSesh.addColumn("sensol-num");
   tableSesh.addColumn("value");
   tableSesh.addColumn("match-num");
+
+  tableDrawing = new Table();
+  tableDrawing.addColumn("id");
+  tableDrawing.addColumn("mode");
+  tableDrawing.addColumn("value");
 
 
   currentActivity = new MenuActivity();

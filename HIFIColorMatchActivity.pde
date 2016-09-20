@@ -44,7 +44,7 @@ public class HIFIColorMatchActivity extends CanvasActivity {
     randRed = randInt(50,250);
     randBlue = randInt(50,250);
     randGreen = randInt(50,250);
-    nextButton = new Button((width/2)-25, height-200, 100, 50, color(255), "Next");
+    nextButton = new Button((width/2)-25, height-100, 100, 50, color(255), "Next");
 
     // matchingNibSize = new int[]{randInt(10,100), randInt(10,100), randInt(10,100), randInt(10,100), randInt(10,100), randInt(10,100), randInt(10,100), randInt(10,100), randInt(10,100), randInt(10,100)};
     // matchingColorsDepth = new int[]{randInt(10,255), randInt(10,255), randInt(10,255), randInt(10,255), randInt(10,255), randInt(10,255), randInt(10,255), randInt(10,255), randInt(10,255), randInt(10,255)};
@@ -152,24 +152,24 @@ public class HIFIColorMatchActivity extends CanvasActivity {
           case 1:
             rgbMatch = ryb2rgb(matchingColorsDepth[matchCount],0,0);
             fill(rgbMatch[RED],rgbMatch[GREEN],rgbMatch[BLUE]);
-            rect(150, 140, 100, 100);
+            rect((width/2)-100, 140, 100, 100);
             fill(0);
             fill(this.rgb[RED],this.rgb[GREEN],this.rgb[BLUE]);
-            rect(150, 340, 100, 100);
+            rect((width/2)+100, 140, 100, 100);
             break;
           case 2:
             rgbMatch = ryb2rgb(0,matchingColorsDepth[matchCount],0);
             fill(rgbMatch[RED],rgbMatch[GREEN],rgbMatch[BLUE]);
-            rect(350, 140, 100, 100);
+            rect((width/2)-100, 340, 100, 100);
             fill(this.rgb[RED],this.rgb[GREEN],this.rgb[BLUE]);
-            rect(350, 340, 100, 100);
+            rect((width/2)+100, 340, 100, 100);
             break;
           case 3:
             rgbMatch = ryb2rgb(0,0,matchingColorsDepth[matchCount]);
             fill(rgbMatch[RED],rgbMatch[GREEN],rgbMatch[BLUE]);
-            rect(550, 140, 100, 100);
+            rect((width/2)-100, 440, 100, 100);
             fill(this.rgb[RED],this.rgb[GREEN],this.rgb[BLUE]);
-            rect(550, 340, 100, 100);
+            rect((width/2)+100, 440, 100, 100);
             break;
         }
 
@@ -195,18 +195,18 @@ public class HIFIColorMatchActivity extends CanvasActivity {
         switch (matchingNib[matchCount]) {
           case 0:
             this.paintBrush.setSize((int)map(this.mag, 1, 700, 100, 1));
-            image(nibs[matchingNib[matchCount]], (150)-this.paintBrush.getSize()/2, (140)-this.paintBrush.getSize()/2, matchingNibSize[matchCount], matchingNibSize[matchCount]);
-            image(nibs[matchingNib[matchCount]], (150)-this.paintBrush.getSize()/2, (340)-this.paintBrush.getSize()/2, this.paintBrush.getSize(), this.paintBrush.getSize());
+            image(nibs[matchingNib[matchCount]], ((width/2)-100)-this.paintBrush.getSize()/2, (140)-this.paintBrush.getSize()/2, matchingNibSize[matchCount], matchingNibSize[matchCount]);
+            image(nibs[matchingNib[matchCount]], ((width/2)+100)-this.paintBrush.getSize()/2, (140)-this.paintBrush.getSize()/2, this.paintBrush.getSize(), this.paintBrush.getSize());
           break;
           case 1:
             this.paintBrush.setSize((int)map(this.mag1, 20, 75, 100, 1));
-            image(nibs[matchingNib[matchCount]], (150)-this.paintBrush.getSize()/2, (140)-this.paintBrush.getSize()/2, matchingNibSize[matchCount], matchingNibSize[matchCount]);
-            image(nibs[matchingNib[matchCount]], (150)-this.paintBrush.getSize()/2, (340)-this.paintBrush.getSize()/2, this.paintBrush.getSize(), this.paintBrush.getSize());
+            image(nibs[matchingNib[matchCount]], ((width/2)- 100)-this.paintBrush.getSize()/2, (340)-this.paintBrush.getSize()/2, matchingNibSize[matchCount], matchingNibSize[matchCount]);
+            image(nibs[matchingNib[matchCount]], ((width/2)+ 100)-this.paintBrush.getSize()/2, (340)-this.paintBrush.getSize()/2, this.paintBrush.getSize(), this.paintBrush.getSize());
           break;
           case 2:
             this.paintBrush.setSize((int)map(this.mag2, 1, 500, 100, 1));
-            image(nibs[matchingNib[matchCount]], (150)-this.paintBrush.getSize()/2, (140)-this.paintBrush.getSize()/2, matchingNibSize[matchCount], matchingNibSize[matchCount]);
-            image(nibs[matchingNib[matchCount]], (150)-this.paintBrush.getSize()/2, (340)-this.paintBrush.getSize()/2, this.paintBrush.getSize(), this.paintBrush.getSize());
+            image(nibs[matchingNib[matchCount]], ((width/2)- 100)-this.paintBrush.getSize()/2, (440)-this.paintBrush.getSize()/2, matchingNibSize[matchCount], matchingNibSize[matchCount]);
+            image(nibs[matchingNib[matchCount]], ((width/2)+ 100)-this.paintBrush.getSize()/2, (440)-this.paintBrush.getSize()/2, this.paintBrush.getSize(), this.paintBrush.getSize());
           break;
         }
         if (!trigger) {
