@@ -26,7 +26,7 @@ public class GUIColorMatchActivity extends CanvasActivity {
   private int grabStartTime ;
 
   private String activecolour;
-
+  private String saveMatchColour;
   private int[] rgb;
   private int[] rgbMatch;
   private boolean match;
@@ -44,7 +44,7 @@ public class GUIColorMatchActivity extends CanvasActivity {
     startTime = millis();
     for(int i=0; i < 6; i++){
       matchingNibSize[i] = randInt(10,100);
-      matchingColorsDepth[i] = randInt(10,255);
+      matchingColorsDepth[i] = randInt(50,255);
     }
     switch (tabAtempt){
       case 1:
@@ -123,7 +123,9 @@ public class GUIColorMatchActivity extends CanvasActivity {
         if (matchingMode[i] == 0){
           newRow.setString("value-mode", "paint");
           newRow.setString("value-type", Integer.toString(matchingColorsRGB[i]));
-          newRow.setString("value-computer", Integer.toString(matchingColorsDepth[i]));
+          rgbMatch = ryb2rgb(matchingColorsDepth[matchCount],0,0);
+          saveMatchColour = (rgbMatch[RED]+":"+rgbMatch[GREEN]+":"+rgbMatch[BLUE]);
+          newRow.setString("value-computer", saveMatchColour);
         } else if (matchingMode[i] == 1){
           newRow.setString("value-mode", "nib");
           newRow.setString("value-type", Integer.toString(matchingNib[i]));
@@ -154,6 +156,7 @@ public class GUIColorMatchActivity extends CanvasActivity {
         rectMode(CENTER);
         switch (matchingColorsRGB[matchCount]) {
           case 1:
+            rgb = ryb2rgb(topForce[0], 0, 0);
             rgbMatch = ryb2rgb(matchingColorsDepth[matchCount],0,0);
             fill(rgbMatch[RED],rgbMatch[GREEN],rgbMatch[BLUE]);
             rect((width/2)-100, 140, 100, 100);
@@ -162,6 +165,7 @@ public class GUIColorMatchActivity extends CanvasActivity {
             rect((width/2)+100, 140, 100, 100);
             break;
           case 2:
+            rgb = ryb2rgb(0, topForce[1], 0);
             rgbMatch = ryb2rgb(0,matchingColorsDepth[matchCount],0);
             fill(rgbMatch[RED],rgbMatch[GREEN],rgbMatch[BLUE]);
             rect((width/2)-100, 340, 100, 100);
@@ -170,6 +174,7 @@ public class GUIColorMatchActivity extends CanvasActivity {
             rect((width/2)+100, 340, 100, 100);
             break;
           case 3:
+            rgb = ryb2rgb(0, 0, topForce[2]);
             rgbMatch = ryb2rgb(0,0,matchingColorsDepth[matchCount]);
             fill(rgbMatch[RED],rgbMatch[GREEN],rgbMatch[BLUE]);
             rect((width/2)-100, 440, 100, 100);
@@ -196,21 +201,21 @@ public class GUIColorMatchActivity extends CanvasActivity {
         switch (matchingNib[matchCount]) {
           case 0:
             this.paintBrush.setSize((int)map(this.red, 1, 255, 100, 1));
-            image(nibs[matchingNib[matchCount]], ((width/2)+100)-matchingNibSize[matchCount]/2, (140)-matchingNibSize[matchCount]/2, matchingNibSize[matchCount], matchingNibSize[matchCount]);
-            if (!reseting) image(nibs[matchingNib[matchCount]], ((width/2)-100)-this.paintBrush.getSize()/2, (140)-this.paintBrush.getSize()/2, this.paintBrush.getSize(), this.paintBrush.getSize());
-            if (reseting) image(nibs[matchingNib[matchCount]], ((width/2)-100)-100/2, (140)-100/2, 100, 100);
+            image(nibs[matchingNib[matchCount]], ((width/2)-100)-matchingNibSize[matchCount]/2, (140)-matchingNibSize[matchCount]/2, matchingNibSize[matchCount], matchingNibSize[matchCount]);
+            if (!reseting) image(nibs[matchingNib[matchCount]], ((width/2)+100)-this.paintBrush.getSize()/2, (140)-this.paintBrush.getSize()/2, this.paintBrush.getSize(), this.paintBrush.getSize());
+            if (reseting) image(nibs[matchingNib[matchCount]], ((width/2)+100)-100/2, (140)-100/2, 100, 100);
           break;
           case 1:
             this.paintBrush.setSize((int)map(this.green, 1, 255, 100, 1));
-            image(nibs[matchingNib[matchCount]], ((width/2)+100)-matchingNibSize[matchCount]/2, (340)-matchingNibSize[matchCount]/2, matchingNibSize[matchCount], matchingNibSize[matchCount]);
-            if (!reseting) image(nibs[matchingNib[matchCount]], ((width/2)-100)-this.paintBrush.getSize()/2, (340)-this.paintBrush.getSize()/2, this.paintBrush.getSize(), this.paintBrush.getSize());
-            if (reseting) image(nibs[matchingNib[matchCount]], ((width/2)-100)-100/2, (340)-100/2, 100, 100);
+            image(nibs[matchingNib[matchCount]], ((width/2)-100)-matchingNibSize[matchCount]/2, (340)-matchingNibSize[matchCount]/2, matchingNibSize[matchCount], matchingNibSize[matchCount]);
+            if (!reseting) image(nibs[matchingNib[matchCount]], ((width/2)+100)-this.paintBrush.getSize()/2, (340)-this.paintBrush.getSize()/2, this.paintBrush.getSize(), this.paintBrush.getSize());
+            if (reseting) image(nibs[matchingNib[matchCount]], ((width/2)+100)-100/2, (340)-100/2, 100, 100);
           break;
           case 2:
             this.paintBrush.setSize((int)map(this.blue, 1, 255, 100, 1));
-            image(nibs[matchingNib[matchCount]], ((width/2)+100)-this.matchingNibSize[matchCount]/2, (440)-matchingNibSize[matchCount]/2, matchingNibSize[matchCount], matchingNibSize[matchCount]);
-            if (!reseting) image(nibs[matchingNib[matchCount]], ((width/2)-100)-this.paintBrush.getSize()/2, (440)-this.paintBrush.getSize()/2, this.paintBrush.getSize(), this.paintBrush.getSize());
-            if (reseting) image(nibs[matchingNib[matchCount]], ((width/2)-100)-100/2, (440)-100/2, 100, 100);
+            image(nibs[matchingNib[matchCount]], ((width/2)-100)-this.matchingNibSize[matchCount]/2, (440)-matchingNibSize[matchCount]/2, matchingNibSize[matchCount], matchingNibSize[matchCount]);
+            if (!reseting) image(nibs[matchingNib[matchCount]], ((width/2)+100)-this.paintBrush.getSize()/2, (440)-this.paintBrush.getSize()/2, this.paintBrush.getSize(), this.paintBrush.getSize());
+            if (reseting) image(nibs[matchingNib[matchCount]], ((width/2)+100)-100/2, (440)-100/2, 100, 100);
           break;
         }
         userValues[matchCount] = Integer.toString(this.paintBrush.getSize());

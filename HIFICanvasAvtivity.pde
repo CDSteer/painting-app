@@ -45,7 +45,6 @@
     text("YELLOW", width-155, 120);
     fill(0,0,255);
     text("BLUE", width-95, 120);
-
     fill(200);
     rect(width-195, 50, 40, 40);
     fill(200);
@@ -68,52 +67,52 @@
 
   void nibChange(){
     super.draw(this.paintBrush.getSize(), this.paintBrush.getColor(), squeezeSensel);
-    println("Force: "+squeezeValues[0]+", "+ squeezeValues[1] +", "+squeezeValues[2]);
-    println("nibSize: "+(int)map(this.squeezeValues[0], 15, 500, 72, 1)+", "+ (int)map(this.squeezeValues[1], 15, 500, 72, 1) +", "+(int)map(this.squeezeValues[2], 15, 500, 72, 1));
+    // println("Force: "+squeezeValues[0]+", "+ squeezeValues[1] +", "+squeezeValues[2]);
+    // println("nibSize: "+(int)map(this.squeezeValues[0], 15, 500, 72, 1)+", "+ (int)map(this.squeezeValues[1], 15, 500, 72, 1) +", "+(int)map(this.squeezeValues[2], 15, 500, 72, 1));
     squeezeSensel = maxIndex(squeezeValues[0], squeezeValues[1], squeezeValues[2]);
     mIndex = maxIndex(squeezeValues[0], squeezeValues[1], squeezeValues[2]);
     switch(mIndex){
       case 0:
-        this.paintBrush.setSize((int)map(this.squeezeValues[squeezeSensel], 1, 500, 72, 1));
+        this.paintBrush.setSize((int)map(this.squeezeValues[squeezeSensel], 1, 650, 72, 1));
         break;
       case 1:
-        this.paintBrush.setSize((int)map(this.squeezeValues[squeezeSensel], 20, 75, 72, 1));
+        this.paintBrush.setSize((int)map(this.squeezeValues[squeezeSensel], 1, 650, 72, 1));
         break;
       case 2:
-        this.paintBrush.setSize((int)map(this.squeezeValues[squeezeSensel], 1, 700, 72, 1));
+        this.paintBrush.setSize((int)map(this.squeezeValues[squeezeSensel], 1, 650, 72, 1));
         break;
     }
     activecolour = (squeezeSensel+":"+this.paintBrush.getSize());
-    newRowDrawing = tableDrawing.addRow();
-    newRowDrawing.setInt("id", tableDrawing.getRowCount()-1);
-    newRowDrawing.setString("value-mode", "nib");
-    newRowDrawing.setString("value", activecolour);
+    if (squeezeValues[0] > 0 || squeezeValues[1] > 0 || squeezeValues[2] > 0){
+      newRowDrawing = tableDrawing.addRow();
+      newRowDrawing.setInt("id", tableDrawing.getRowCount()-1);
+      newRowDrawing.setString("value-mode", "nib");
+      newRowDrawing.setString("value", activecolour);
+    }
     // if (max(squeezeValues[0], squeezeValues[1], squeezeValues[2]) > 1){
     //   this.paintBrush.setSize((int)map(this.squeezeValues[squeezeSensel], 1, 500, 72, 1));
     // }
   }
-
-
   void colourChange(){
     super.draw(this.paintBrush.getSize(), this.paintBrush.getColor(), squeezeSensel);
     if (this.force > 15) {
-      redIn = map(this.force, 15, 600, 0, 255);
+      redIn = map(this.force, 15, 650, 0, 255);
     } else {
       redIn = 0;
     }
     if (this.force1 > 15) {
-      greenIn = map(this.force1, 15, 600, 0, 255);
+      greenIn = map(this.force1, 15, 650, 0, 255);
     } else {
       greenIn = 0;
     }
     if (this.force2 > 15) {
-      blueIn = map(this.force2, 15, 600, 0, 255);
+      blueIn = map(this.force2, 15, 650, 0, 255);
     } else {
       blueIn = 0;
     }
     rgb = ryb2rgb(redIn, greenIn, blueIn);
-    println("Force: "+force+", "+ force1 +", "+force2);
-    println("colour: "+redIn+", "+ greenIn +", "+blueIn);
+    // println("Force: "+force+", "+ force1 +", "+force2);
+    // println("colour: "+redIn+", "+ greenIn +", "+blueIn);
 
     red = ryb2rgb(redIn, 0, 0);
     fill(red[RED],red[GREEN],red[BLUE]);
@@ -130,11 +129,13 @@
     fill(rgb[RED],rgb[GREEN],rgb[BLUE]);
     rect(width-200, 160, 150, 100);
     this.paintBrush.setColor(color(rgb[RED],rgb[GREEN],rgb[BLUE]));
+    if (redIn > 0 || greenIn > 0 || blueIn > 0){
       activecolour = (this.rgb[RED]+":"+this.rgb[GREEN]+":"+this.rgb[BLUE]);
       newRowDrawing = tableDrawing.addRow();
       newRowDrawing.setInt("id", tableDrawing.getRowCount()-1);
       newRowDrawing.setString("value-mode", "paint");
       newRowDrawing.setString("value", activecolour);
+    }
   }
 
   void click(){
@@ -151,7 +152,7 @@
       background(200);
     }
   }
-  
+
   void drawDirctionViz(){
     ellipseMode(CENTER);
     fill(255);
