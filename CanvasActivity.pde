@@ -4,6 +4,7 @@ public abstract class CanvasActivity extends PaintingAppActivity{
   int yMin = 40; // the position of the canvas from top
   int yMax = 560; // the position of the canvas from bottom
   int amoutOfPaint;
+  PImage cursorImg;
 
   public CanvasActivity(){
     background(200);
@@ -25,12 +26,15 @@ public abstract class CanvasActivity extends PaintingAppActivity{
   }
 
   void paint(int size, color c, int nib) {
-    if (super.dragging && amoutOfPaint > 0 && this.inCanvas()){
-     image(changeImgColor(nibs[nib], red(c), green(c), blue(c)), mouseX-(size/2), mouseY-(size/2), size, size);
-     image(changeImgColor(nibs[nib], red(c), green(c), blue(c)), mouseX+2-(size/2), mouseY-(size/2), size, size);
-     image(changeImgColor(nibs[nib], red(c), green(c), blue(c)), mouseX-2-(size/2), mouseY-(size/2), size, size);
-     image(changeImgColor(nibs[nib], red(c), green(c), blue(c)), mouseX-(size/2), mouseY+2-(size/2), size, size);
-     image(changeImgColor(nibs[nib], red(c), green(c), blue(c)), mouseX-(size/2), mouseY-2-(size/2), size, size);
+    if (this.inCanvas()){
+      cursorImg = changeImgColor(nibs[nib], red(c), green(c), blue(c));
+      cursorImg.resize(size,size);
+      cursor(cursorImg);
+      if (super.dragging){
+        image(changeImgColor(nibs[nib], red(c), green(c), blue(c)), mouseX-(size/2), mouseY-(size/2), size, size);
+      }
+    } else {
+      cursor(ARROW);
     }
   }
 

@@ -50,7 +50,7 @@ public class HIFIColorMatchActivity extends CanvasActivity {
     // matchingNibSize = new int[]{randInt(10,100), randInt(10,100), randInt(10,100), randInt(10,100), randInt(10,100), randInt(10,100), randInt(10,100), randInt(10,100), randInt(10,100), randInt(10,100)};
     // matchingColorsDepth = new int[]{randInt(10,255), randInt(10,255), randInt(10,255), randInt(10,255), randInt(10,255), randInt(10,255), randInt(10,255), randInt(10,255), randInt(10,255), randInt(10,255)};
     for(int i=0; i < 6; i++){
-      randNibS = randInt(50,100);
+      randNibS = randInt(10,70);
       matchingNibSize[i] = randNibS;
       randColor = randInt(50,255);
       matchingColorsDepth[i] = randColor;
@@ -203,21 +203,21 @@ public class HIFIColorMatchActivity extends CanvasActivity {
         switch (matchingNib[matchCount]) {
           case 0:
             this.paintBrush.setSize((int)map(this.mag, 1, 650, 100, 1));
-            image(nibs[matchingNib[matchCount]], ((width/2)-100)-matchingNibSize[matchCount]/2, (140)-matchingNibSize[matchCount]/2, matchingNibSize[matchCount], matchingNibSize[matchCount]);
-            if (!reseting) image(nibs[matchingNib[matchCount]], ((width/2)+100)-this.paintBrush.getSize()/2, (140)-this.paintBrush.getSize()/2, this.paintBrush.getSize(), this.paintBrush.getSize());
-            if (reseting) image(nibs[matchingNib[matchCount]], ((width/2)+100)-100/2, (140)-100/2, 100, 100);
+            image(changeImgColor(nibs[matchingNib[matchCount]], 255, 0, 0), ((width/2)-100)-matchingNibSize[matchCount]/2, (140)-matchingNibSize[matchCount]/2, matchingNibSize[matchCount], matchingNibSize[matchCount]);
+            if (!reseting) image(changeImgColor(nibs[matchingNib[matchCount]], 255, 0, 0), ((width/2)+100)-this.paintBrush.getSize()/2, (140)-this.paintBrush.getSize()/2, this.paintBrush.getSize(), this.paintBrush.getSize());
+            if (reseting) image(changeImgColor(nibs[matchingNib[matchCount]], 255, 0, 0), ((width/2)+100)-100/2, (140)-100/2, 100, 100);
           break;
           case 1:
             this.paintBrush.setSize((int)map(this.mag1, 1, 650, 100, 1));
-            image(nibs[matchingNib[matchCount]], ((width/2)-100)-matchingNibSize[matchCount]/2, (340)-matchingNibSize[matchCount]/2, matchingNibSize[matchCount], matchingNibSize[matchCount]);
-            if (!reseting) image(nibs[matchingNib[matchCount]], ((width/2)+100)-this.paintBrush.getSize()/2, (340)-this.paintBrush.getSize()/2, this.paintBrush.getSize(), this.paintBrush.getSize());
-            if (reseting) image(nibs[matchingNib[matchCount]], ((width/2)+100)-100/2, (340)-100/2, 100, 100);
+            image(changeImgColor(nibs[matchingNib[matchCount]], 255, 255, 0), ((width/2)-100)-matchingNibSize[matchCount]/2, (340)-matchingNibSize[matchCount]/2, matchingNibSize[matchCount], matchingNibSize[matchCount]);
+            if (!reseting) image(changeImgColor(nibs[matchingNib[matchCount]], 255, 255, 0), ((width/2)+100)-this.paintBrush.getSize()/2, (340)-this.paintBrush.getSize()/2, this.paintBrush.getSize(), this.paintBrush.getSize());
+            if (reseting) image(changeImgColor(nibs[matchingNib[matchCount]], 255, 255, 0), ((width/2)+100)-100/2, (340)-100/2, 100, 100);
           break;
           case 2:
             this.paintBrush.setSize((int)map(this.mag2, 1, 650, 100, 1));
-            image(nibs[matchingNib[matchCount]], ((width/2)-100)-matchingNibSize[matchCount]/2, (440)-matchingNibSize[matchCount]/2, matchingNibSize[matchCount], matchingNibSize[matchCount]);
-            if (!reseting) image(nibs[matchingNib[matchCount]], ((width/2)+100)-this.paintBrush.getSize()/2, (440)-this.paintBrush.getSize()/2, this.paintBrush.getSize(), this.paintBrush.getSize());
-            if (reseting) image(nibs[matchingNib[matchCount]], ((width/2)+100)-100/2, (440)-100/2, 100, 100);
+            image(changeImgColor(nibs[matchingNib[matchCount]], 0, 0, 255), ((width/2)-100)-matchingNibSize[matchCount]/2, (440)-matchingNibSize[matchCount]/2, matchingNibSize[matchCount], matchingNibSize[matchCount]);
+            if (!reseting) image(changeImgColor(nibs[matchingNib[matchCount]], 0, 0, 255), ((width/2)+100)-this.paintBrush.getSize()/2, (440)-this.paintBrush.getSize()/2, this.paintBrush.getSize(), this.paintBrush.getSize());
+            if (reseting) image(changeImgColor(nibs[matchingNib[matchCount]], 0, 0, 255), ((width/2)+100)-100/2, (440)-100/2, 100, 100);
           break;
         }
         if (!trigger) {

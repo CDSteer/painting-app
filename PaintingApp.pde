@@ -13,7 +13,7 @@ int forceValue;
 SocketServer mSocketServer;
 String[] qtmp;
 String[] qtmp2;
-String pNum = "p1";
+String pNum = "pTest";
 int tabAtempt = 1;
 int defomAtempt = 1;
 String fileName;
@@ -29,7 +29,6 @@ void setup() {
   nibs[2] = loadImage("img/brush.png");
 
   prepareExitHandler();
-
   tableResults = new Table();
   tableResults.addColumn("id");
   tableResults.addColumn("value-mode");
@@ -46,8 +45,8 @@ void setup() {
 
   tableDrawing = new Table();
   tableDrawing.addColumn("id");
-  tableDrawing.addColumn("mode");
   tableDrawing.addColumn("value");
+  tableDrawing.addColumn("value-mode");
 
 
   currentActivity = new MenuActivity();

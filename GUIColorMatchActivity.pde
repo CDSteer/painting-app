@@ -123,7 +123,11 @@ public class GUIColorMatchActivity extends CanvasActivity {
         if (matchingMode[i] == 0){
           newRow.setString("value-mode", "paint");
           newRow.setString("value-type", Integer.toString(matchingColorsRGB[i]));
-          rgbMatch = ryb2rgb(matchingColorsDepth[matchCount],0,0);
+          switch (matchingColorsRGB[i]){
+            case 1: rgbMatch = ryb2rgb(matchingColorsDepth[i],0,0); break;
+            case 2: rgbMatch = ryb2rgb(0,matchingColorsDepth[i],0); break;
+            case 3: rgbMatch = ryb2rgb(0,0,matchingColorsDepth[i]); break;
+          }
           saveMatchColour = (rgbMatch[RED]+":"+rgbMatch[GREEN]+":"+rgbMatch[BLUE]);
           newRow.setString("value-computer", saveMatchColour);
         } else if (matchingMode[i] == 1){
@@ -185,7 +189,6 @@ public class GUIColorMatchActivity extends CanvasActivity {
         }
         rectMode(CORNER);
         userValues[matchCount] = (this.rgb[RED]+":"+this.rgb[GREEN]+":"+this.rgb[BLUE]);
-        println(matchCount);
         if (red > 0 || green > 0 || blue > 0){
           activecolour = (this.rgb[RED]+":"+this.rgb[GREEN]+":"+this.rgb[BLUE]);
           activeSensol = maxIndex(red,green,blue);
@@ -201,21 +204,21 @@ public class GUIColorMatchActivity extends CanvasActivity {
         switch (matchingNib[matchCount]) {
           case 0:
             this.paintBrush.setSize((int)map(this.red, 1, 255, 100, 1));
-            image(nibs[matchingNib[matchCount]], ((width/2)-100)-matchingNibSize[matchCount]/2, (140)-matchingNibSize[matchCount]/2, matchingNibSize[matchCount], matchingNibSize[matchCount]);
-            if (!reseting) image(nibs[matchingNib[matchCount]], ((width/2)+100)-this.paintBrush.getSize()/2, (140)-this.paintBrush.getSize()/2, this.paintBrush.getSize(), this.paintBrush.getSize());
-            if (reseting) image(nibs[matchingNib[matchCount]], ((width/2)+100)-100/2, (140)-100/2, 100, 100);
+            image(changeImgColor(nibs[matchingNib[matchCount]], 255,0,0), ((width/2)-100)-matchingNibSize[matchCount]/2, (140)-matchingNibSize[matchCount]/2, matchingNibSize[matchCount], matchingNibSize[matchCount]);
+            if (!reseting) image(changeImgColor(nibs[matchingNib[matchCount]], 255,0,0), ((width/2)+100)-this.paintBrush.getSize()/2, (140)-this.paintBrush.getSize()/2, this.paintBrush.getSize(), this.paintBrush.getSize());
+            if (reseting) image(changeImgColor(nibs[matchingNib[matchCount]], 255,0,0), ((width/2)+100)-100/2, (140)-100/2, 100, 100);
           break;
           case 1:
             this.paintBrush.setSize((int)map(this.green, 1, 255, 100, 1));
-            image(nibs[matchingNib[matchCount]], ((width/2)-100)-matchingNibSize[matchCount]/2, (340)-matchingNibSize[matchCount]/2, matchingNibSize[matchCount], matchingNibSize[matchCount]);
-            if (!reseting) image(nibs[matchingNib[matchCount]], ((width/2)+100)-this.paintBrush.getSize()/2, (340)-this.paintBrush.getSize()/2, this.paintBrush.getSize(), this.paintBrush.getSize());
-            if (reseting) image(nibs[matchingNib[matchCount]], ((width/2)+100)-100/2, (340)-100/2, 100, 100);
+            image(changeImgColor(nibs[matchingNib[matchCount]], 255,255,0), ((width/2)-100)-matchingNibSize[matchCount]/2, (340)-matchingNibSize[matchCount]/2, matchingNibSize[matchCount], matchingNibSize[matchCount]);
+            if (!reseting) image(changeImgColor(nibs[matchingNib[matchCount]], 255,255,0), ((width/2)+100)-this.paintBrush.getSize()/2, (340)-this.paintBrush.getSize()/2, this.paintBrush.getSize(), this.paintBrush.getSize());
+            if (reseting) image(changeImgColor(nibs[matchingNib[matchCount]], 255,255,0), ((width/2)+100)-100/2, (340)-100/2, 100, 100);
           break;
           case 2:
             this.paintBrush.setSize((int)map(this.blue, 1, 255, 100, 1));
-            image(nibs[matchingNib[matchCount]], ((width/2)-100)-this.matchingNibSize[matchCount]/2, (440)-matchingNibSize[matchCount]/2, matchingNibSize[matchCount], matchingNibSize[matchCount]);
-            if (!reseting) image(nibs[matchingNib[matchCount]], ((width/2)+100)-this.paintBrush.getSize()/2, (440)-this.paintBrush.getSize()/2, this.paintBrush.getSize(), this.paintBrush.getSize());
-            if (reseting) image(nibs[matchingNib[matchCount]], ((width/2)+100)-100/2, (440)-100/2, 100, 100);
+            image(changeImgColor(nibs[matchingNib[matchCount]], 0,0,255), ((width/2)-100)-this.matchingNibSize[matchCount]/2, (440)-matchingNibSize[matchCount]/2, matchingNibSize[matchCount], matchingNibSize[matchCount]);
+            if (!reseting) image(changeImgColor(nibs[matchingNib[matchCount]], 0,0,255), ((width/2)+100)-this.paintBrush.getSize()/2, (440)-this.paintBrush.getSize()/2, this.paintBrush.getSize(), this.paintBrush.getSize());
+            if (reseting) image(changeImgColor(nibs[matchingNib[matchCount]], 0,0,255), ((width/2)+100)-100/2, (440)-100/2, 100, 100);
           break;
         }
         userValues[matchCount] = Integer.toString(this.paintBrush.getSize());

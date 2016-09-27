@@ -67,6 +67,12 @@ public class GUICanvasAvtivity extends CanvasActivity {
    this.paintBrush.drawSlider(color(rgb[RED],rgb[GREEN],rgb[BLUE]), squeezeSensel);
    fill(0);
    buttonListen();
+   if (super.isDragging() && super.inCanvas()){
+     newRowDrawing = tableDrawing.addRow();
+     newRowDrawing.setInt("id", tableDrawing.getRowCount()-1);
+     newRowDrawing.setString("value-mode", "paitning");
+     newRowDrawing.setString("value", (mouseX+":"+mouseY));
+   }
  }
 
  void nibChange(){
@@ -103,9 +109,7 @@ public class GUICanvasAvtivity extends CanvasActivity {
     redSet = (int)redIn;
     greenSet = (int)greenIn;
     blueSet = (int)blueIn;
-
     rgb = ryb2rgb(redSet, greenSet, blueSet);
-    println("colour: " + redSet + ", " + greenSet + ", " + blueSet);
 
     red = ryb2rgb(redSet, 0, 0);
     fill(red[RED],red[GREEN],red[BLUE]);
@@ -154,17 +158,10 @@ public class GUICanvasAvtivity extends CanvasActivity {
  }
 
  private void parceInput(){
-   println(inputValue);
+   // println(inputValue);
    if (inputValue != null) {
      String[] qtmp = splitTokens(inputValue, ":");
      if (qtmp.length == 6){
-        // println(qtmp[0]);
-        // println(qtmp[1]);
-        // println(qtmp[2]);
-        // println(qtmp[3]);
-        // println(qtmp[4]);
-        // println(qtmp[5]);
-
         this.redIn = int(qtmp[1]);
         this.greenIn = int(qtmp[3]);
         this.blueIn = int(qtmp[5]);
